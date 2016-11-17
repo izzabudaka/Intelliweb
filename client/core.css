@@ -1,0 +1,11 @@
+#navigator{
+    height:70px;
+    position:fixed;
+    left:0;top:0;right:0;
+    background:rgba(0,0,0,0.05);
+}
+
+#webview{
+      position: fixed;
+      top:70px;left:0;right:100px;bottom:0;
+}
