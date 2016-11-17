@@ -18,3 +18,5 @@ build/
 tests/report/
 
 intelliweb/.idea
+
+server/node_modules

@@ -2,15 +2,51 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58b8bf6c-2c14-4096-a08b-f9681be4c78a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/.idea/dataSources.local.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/.idea/dataSources.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/.idea/intelliweb.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/.idea/workspace.xml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/classifiers/english.conll.4class.distsim.crf.ser.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/classifiers/english.muc.7class.distsim.crf.ser.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/classifiers/example.serialized.ncc.ncc.ser.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/lib/joda-time.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/lib/jollyday-0.4.7.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/lib/slf4j-api.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/lib/slf4j-simple.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/lib/stanford-ner-resources.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/stanford-ner-3.6.0-javadoc.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/stanford-ner-3.6.0-sources.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/stanford-ner-3.6.0.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/stanford-ner.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/LICENSE.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/NERDemo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/README.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/build.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/classifiers/english.all.3class.distsim.prop" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/classifiers/english.conll.4class.distsim.prop" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/classifiers/english.muc.7class.distsim.prop" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/classifiers/example.serialized.ncc.prop" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/ner-gui.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/ner-gui.command" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/ner-gui.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/ner.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/ner.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/sample-conll-file.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/sample-w-time.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/sample.ner.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stanford-ner/sample.txt" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/db.sqlite3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelli_web/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelli_web/admin.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelli_web/apps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelli_web/migrations/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelli_web/models.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelli_web/tests.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelli_web/views.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelliweb/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelliweb/settings.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelliweb/urls.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/intelliweb/wsgi.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/intelliweb/manage.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Facebook_Global_Finals.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,11 +67,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/server.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="693">
+              <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -49,8 +95,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/server/server.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -192,12 +238,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1479420575253</updated>
-      <workItem from="1479420576670" duration="182000" />
+      <workItem from="1479420576670" duration="269000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="182000" />
+    <option name="totallyTimeSpent" value="269000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-16" y="-16" width="3232" height="1732" extended-state="6" />
@@ -229,18 +275,18 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="693">
+          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
           <folding />
         </state>
       </provider>
