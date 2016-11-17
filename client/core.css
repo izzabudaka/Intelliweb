@@ -1,11 +1,20 @@
 #navigator{
-    height:70px;
+    height:40px;
     position:fixed;
     left:0;top:0;right:0;
-    background:rgba(0,0,0,0.05);
+    background:rgba(0,0,0,0.03);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+#rail{
+    width:200px;
+    position:fixed;
+    right:0;top:41px;bottom:0;
+    background:rgba(0,0,0,0.03);
+    border-left: 1px solid rgba(0,0,0,0.1);
 }
 
 #webview{
       position: fixed;
-      top:70px;left:0;right:100px;bottom:0;
+      top:41px;left:0;right:201px;bottom:0;
 }
