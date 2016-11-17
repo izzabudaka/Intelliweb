@@ -1,6 +1,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
-    fibrous = require('fibrous');
+    fibrous = require('fibrous'),
+    github = require('./service/Github');
 
 var port = process.env.PORT || 3000;
 
@@ -12,8 +13,18 @@ app.use(bodyParser.json());
 app.use(fibrous.middleware);
 
 
-app.post('/api', function(req, res) {
-    console.log(req.body);
+app.get('/api/github/person', (req, res) => {
+    var gh = github.getUser('Gilbert09');
+    res.json({
+        gh: gh
+    });
+});
+
+app.get('/api/github/repo', (req, res) => {
+    var gh = github.getRepo('goodeggs', 'fibrous');
+    res.json({
+        repo: gh
+    });
 });
 
 app.listen(port, function () {

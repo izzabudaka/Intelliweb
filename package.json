@@ -13,6 +13,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "fibrous": "^0.4.0",
+    "github": "^6.0.4",
     "node-ner": "0.0.3"
   }
 }
