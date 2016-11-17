@@ -1,7 +1,14 @@
 let webview  = document.getElementById("foo");
 webview.addEventListener('did-start-loading', function() {
     console.log(webview);
-    webview.executeJavaScript("document.getElementsByTagName('a')[0].offsetLeft", false, function(x) {console.log(x);});
+    webview.executeJavaScript("(function() {var coll = document.getElementsByTagName('a')"+
+								"var list = Array.prototype.slice.call(coll,0)"+
+
+									"function isLink(reference){"+
+										"return reference.href.length != 0"+
+									"}"+
+
+"list.filter(isLink)})()", false, function(x) {console.log(x);});
 });
 
 $(document).load(function(){
