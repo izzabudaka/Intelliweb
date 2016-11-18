@@ -4,17 +4,20 @@ class Card extends React.Component {
   }
 
   render() {
-    let rootStyle ={
-      width:"180px",
-      height:"230px",
+    let rootStyle = {
+      width:"240px",
       borderRadius:"10px",
       border:"1px solid rgba(0,0,0,0.05)",
       margin:"10px",
       background:"white",
       overflowY:"scroll",
       display:"inline-block",
-      position:"relative"
+      position:"relative",
+      boxShadow:"0px 0px 33px 0px rgba(0,0,0,0.19)"
     };
+
+    for (var attrname in this.props.style) { rootStyle[attrname] = this.props.style[attrname]; }
+
 
     // let cardData = [
     //     {type:2,payload:{url:"https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",icon:true}},
@@ -32,7 +35,7 @@ class Card extends React.Component {
     
 
     return (
-      <div style={rootStyle}>
+      <div style={rootStyle} onMouseLeave={()=>this.props.onMouseOut()}>
             {elements}
             <span style={{
                 display:"inline-block",
@@ -60,6 +63,7 @@ class Card extends React.Component {
         ((prevHash << 5) - prevHash) + currVal.charCodeAt(0), 0);
     }
 
+  chartCanvas;
   static getElement(type,payload){
       let key = Card.hashCode(JSON.stringify(payload));
       if(type == 0){
@@ -79,14 +83,14 @@ class Card extends React.Component {
           return <div key={key}>
             <h1 style={{
                 margin:"8px",
-                fontSize:"9pt"   ,fontWeight:"400" 
+                fontSize:"12pt" 
             }}>
                 {payload["title"]}
             </h1>
 
             <h2 style={{
                 margin:"8px",
-                fontSize:"8pt",
+                fontSize:"11pt",
                 color:'gray',
                 wordWrap:"break-word"
             }}>
@@ -136,6 +140,21 @@ class Card extends React.Component {
                 {payload["name"]}
             </h1>
           </div>
+      }
+      else if(type == 4){
+          return <div>
+            <canvas ref={(x) => this.chartCanvas = x} width="240" height="240"/>
+          </div>
+      }
+  }
+
+  componentDidMount(){
+      if(this.props.data.filter(x=>x.type==4).lenght>0) {
+          if(this.chartCanvas == undefined) return;
+          var myRadarChart = new Chart(this.chartCanvas.getDOMNode(), {
+                type: 'radar',
+                data: this.props.data.filter(x=>x.type==4).payload
+          });
       }
   }
 

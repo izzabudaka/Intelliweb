@@ -54,4 +54,15 @@ window.onload = function() {
       });
       ipcRenderer.sendToHost('get_titles', list_title);
       //console.log(list_title);
+
+      var list_table = Array.prototype.slice.call(document.getElementsByTagName('table'),0);
+
+      list_table = list_title.map(function(ref){
+            return {
+                  html: ref.innerHTML,
+                  posX: ref.getBoundingClientRect().left,
+                  posY: ref.getBoundingClientRect().top
+            };
+      });
+      ipcRenderer.sendToHost('get_tables', list_table);
 };

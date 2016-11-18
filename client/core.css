@@ -1,5 +1,5 @@
 #navigator{
-    height:40px;
+    height:80px;
     position:fixed;
     left:0;top:0;right:0;
     background:rgba(0,0,0,0.03);
@@ -9,14 +9,14 @@
 #rail{
     width:300px;
     position:fixed;
-    right:0;top:41px;bottom:0;
+    right:0;top:81px;bottom:0;
     background:rgba(0,0,0,0.03);
     border-left: 1px solid rgba(0,0,0,0.05);
 }
 
 #webview{
       position: fixed;
-      top:41px;left:0;right:301px;bottom:0;
+      top:81px;left:0;right:301px;bottom:0;
 }
 
 h1,h2{
@@ -30,7 +30,7 @@ textarea:focus, input:focus{
 
 #stash{
     position:fixed;
-    top:41px;left:0px;right:0px;bottom:0px;
+    top:81px;left:0px;right:0px;bottom:0px;
     background-color: #f0f0f0;
     visibility:hidden;
 }
