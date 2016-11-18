@@ -23,7 +23,7 @@ var _getUser = (username, callback) => {
         }
 
         var card = Card();
-        card.addTitle(res.name, '#fbfbfb');
+        card.addTitle("Github User: " + res.name, '#fbfbfb');
         card.addSubtitle(res.login, 'Username', '#fbfbfb');
         card.addImage(res.avatar_url);
         card.addButton(res.html_url, 'View Profile', '#fbfbfb', '#222');
@@ -43,7 +43,7 @@ var _getRepo = (owner, repoName, callback) => {
         }
 
         var card = Card();
-        card.addTitle(res.name, '#fbfbfb');
+        card.addTitle("Github Repo: " + res.name, '#fbfbfb');
         card.addSubtitle(res.owner.login, 'Username', '#fbfbfb');
         card.addSubtitle(res.owner.description, 'Description', '#fbfbfb');
         card.addSubtitle(res.stargazers_count, 'Stars', '#fbfbfb');

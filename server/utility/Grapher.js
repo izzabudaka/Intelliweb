@@ -54,6 +54,8 @@ this.plot_radar2 = function(html, callback){
       }
     }
     var card = Card();
+
+    card.addTitle("Graph: Figure 1");
     card.addGraph(result);
     callback(card)
   } catch(e){
