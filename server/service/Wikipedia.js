@@ -59,7 +59,6 @@ this.get_entity_cards = function(entities, callback){
 	var addToResult = function(card, title, img_url){
 		var no_html = card.replace(/<(?:.|\n)*?>/gm, '')
 		//result.push(modler.get_title_sub(title, no_html))
-
 		var cardEle = Card();
 		cardEle.addTitle(title);
 		cardEle.addSubtitle(no_html);
