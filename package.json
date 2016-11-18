@@ -22,13 +22,16 @@
     "google-images": "^2.0.0",
     "googlemaps": "^1.11.1",
     "jsdom": "^9.8.3",
+    "lodash-node": "^3.10.2",
     "node-google-image-search": "^1.0.2",
     "node-ner": "0.0.3",
     "node-wikipedia": "0.0.2",
     "node-wit": "^4.1.0",
     "request": "^2.78.0",
     "rsvp": "^3.3.3",
+    "summarizer": "^1.0.0",
     "textversionjs": "^1.0.2",
+    "underscore": "^1.8.3",
     "wikijs": "^1.1.1",
     "wikipedia-js": "0.0.6"
   }
