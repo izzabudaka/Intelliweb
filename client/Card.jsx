@@ -122,7 +122,7 @@ class Card extends React.Component {
               marginBottom:"5px"
           }}>
             <img style={{
-                width:"180px",maxWidth:"180px",display:"inline-block"
+                width:"240px",maxWidth:"240px",display:"inline-block"
             }} src={payload["url"]}/>
           </div>
       }

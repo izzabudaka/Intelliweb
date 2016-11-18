@@ -122,6 +122,14 @@
 	            //     {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
 	            // ];
 
+	            var colourElement = this.props.data.filter(function (element) {
+	                return element.type == 5;
+	            });
+
+	            if (colourElement) {
+	                rootStyle.background = colourElement[0].payload.color;
+	            }
+
 	            var elements = this.props.data.map(function (x) {
 	                return Card.getElement(x.type, x.payload);
 	            }.bind(this));
@@ -243,7 +251,7 @@
 	                            marginBottom: "5px"
 	                        } },
 	                    React.createElement("img", { style: {
-	                            width: "180px", maxWidth: "180px", display: "inline-block"
+	                            width: "240px", maxWidth: "240px", display: "inline-block"
 	                        }, src: payload["url"] })
 	                );
 	            } else if (type == 3) {
@@ -318,7 +326,7 @@
 	    key: "render",
 	    value: function render() {
 	      var rootStyle = {
-	        position: "relative", width: "100%", height: "100%", background: "#303030", color: "white"
+	        position: "relative", width: "100%", height: "100%", background: "#d33400", color: "white"
 	      };
 	      var inputHolderStyle = {
 	        position: "absolute",
@@ -330,7 +338,8 @@
 	        height: "100%",
 	        background: "rgba(255,255,255,0.05)",
 	        border: "0px solid rgba(255,255,255,0.08)",
-	        paddingRight: "0px", borderRadius: "0px", paddingLeft: "5px", color: "white"
+	        paddingRight: "0px", borderRadius: "0px", paddingLeft: "5px", color: "white",
+	        fontSize: "11pt"
 	      };
 
 	      console.log("rendering:" + this.props.url);
@@ -575,6 +584,7 @@
 	        border: "1px solid rgba(0,0,0,0.05)",
 	        margin: "10px",
 	        background: "white",
+	        cursor: "pointer",
 	        display: "inline-block", transition: "opacity 1.5s, transform 1.5s", opacity: this.state.loaded ? 1 : 0, transform: this.state.loaded ? "" : "scale(0.5)"
 	      };
 	      var title = this.props.data.filter(function (x) {
@@ -604,7 +614,11 @@
 	            } },
 	          title
 	        ),
-	        card
+	        card,
+	        React.createElement("i", { style: {
+	            position: "absolute",
+	            lineHeight: "50px", verticalAlign: "center"
+	          }, className: "fa fa-eye" })
 	      );
 	    }
 	  }, {
