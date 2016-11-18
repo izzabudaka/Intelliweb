@@ -49,7 +49,7 @@ this.get_entity_cards = function(entities, callback){
 
 	var addToResult = function(card, title){
 		var no_html = card.replace(/<(?:.|\n)*?>/gm, '')
-		result.push(modler.get_title_sub(card, title))
+		result.push(modler.get_title_sub(title, no_html))
 		last_processed = processed
 		processed++
 		if(processed == size)
