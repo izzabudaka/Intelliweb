@@ -46,23 +46,23 @@
 
 	'use strict';
 
-	var _Card = __webpack_require__(1);
+	var _Card = __webpack_require__(2);
 
 	var _Card2 = _interopRequireDefault(_Card);
 
-	var _CardStub = __webpack_require__(14);
+	var _CardStub = __webpack_require__(5);
 
 	var _CardStub2 = _interopRequireDefault(_CardStub);
 
-	var _Stash = __webpack_require__(13);
+	var _Stash = __webpack_require__(4);
 
 	var _Stash2 = _interopRequireDefault(_Stash);
 
-	var _Navigator = __webpack_require__(2);
+	var _Navigator = __webpack_require__(3);
 
 	var _Navigator2 = _interopRequireDefault(_Navigator);
 
-	var _CardBar = __webpack_require__(3);
+	var _CardBar = __webpack_require__(1);
 
 	var _CardBar2 = _interopRequireDefault(_CardBar);
 
@@ -70,6 +70,79 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CardBar = function (_React$Component) {
+	  _inherits(CardBar, _React$Component);
+
+	  function CardBar(props) {
+	    _classCallCheck(this, CardBar);
+
+	    return _possibleConstructorReturn(this, (CardBar.__proto__ || Object.getPrototypeOf(CardBar)).call(this, props));
+	  }
+
+	  _createClass(CardBar, [{
+	    key: "render",
+	    value: function render() {
+	      var _this2 = this;
+
+	      var rootStyle = {
+	        height: this.props.height + "px"
+	      };
+	      // for(var i = 0; i < this.props.height / 250;i++){
+	      //   heights.push(<div style={{width:"100%",overflow:"scroll"}}><div style={{height:"250px",width:"750px"}}>
+	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+	      //   </div></div>)
+	      // }
+	      // let remainder = (this.props.height % 250);
+	      // if(remainder > 0) heights.push(<div style={{height:remainder+"px"}}/>);
+	      // this.props.loaded(this);
+	      var cards = this.props.cards.map(function (data) {
+	        return React.createElement(window.CardStub, { data: data, onURLClicked: function onURLClicked(url) {
+	            return _this2.props.onURLClicked(url);
+	          } });
+	      });
+
+	      return React.createElement(
+	        "div",
+	        { style: { overflowY: "hidden", overflowX: "scroll" } },
+	        React.createElement(
+	          "div",
+	          { style: rootStyle },
+	          cards
+	        )
+	      );
+	    }
+	  }, {
+	    key: "updateScrollPosition",
+	    value: function updateScrollPosition(value) {
+	      if (ReactDOM.findDOMNode(this) != undefined) {
+	        // console.log(ReactDOM.findDOMNode(this).scrollTop);
+	        // console.log(value);
+	        ReactDOM.findDOMNode(this).scrollTop = value + "px";
+	      }
+	    }
+	  }]);
+
+	  return CardBar;
+	}(React.Component);
+
+	window.CardBar = CardBar;
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -300,7 +373,7 @@
 	window.Card = Card;
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -421,89 +494,7 @@
 	window.Navigator = Navigator;
 
 /***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var CardBar = function (_React$Component) {
-	  _inherits(CardBar, _React$Component);
-
-	  function CardBar(props) {
-	    _classCallCheck(this, CardBar);
-
-	    return _possibleConstructorReturn(this, (CardBar.__proto__ || Object.getPrototypeOf(CardBar)).call(this, props));
-	  }
-
-	  _createClass(CardBar, [{
-	    key: "render",
-	    value: function render() {
-	      var _this2 = this;
-
-	      var rootStyle = {
-	        height: this.props.height + "px"
-	      };
-	      // for(var i = 0; i < this.props.height / 250;i++){
-	      //   heights.push(<div style={{width:"100%",overflow:"scroll"}}><div style={{height:"250px",width:"750px"}}>
-	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
-	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
-	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
-	      //   </div></div>)
-	      // }
-	      // let remainder = (this.props.height % 250);
-	      // if(remainder > 0) heights.push(<div style={{height:remainder+"px"}}/>);
-	      // this.props.loaded(this);
-	      var cards = this.props.cards.map(function (data) {
-	        return React.createElement(window.CardStub, { data: data, onURLClicked: function onURLClicked(url) {
-	            return _this2.props.onURLClicked(url);
-	          } });
-	      });
-
-	      return React.createElement(
-	        "div",
-	        { style: { overflowY: "hidden", overflowX: "scroll" } },
-	        React.createElement(
-	          "div",
-	          { style: rootStyle },
-	          cards
-	        )
-	      );
-	    }
-	  }, {
-	    key: "updateScrollPosition",
-	    value: function updateScrollPosition(value) {
-	      if (ReactDOM.findDOMNode(this) != undefined) {
-	        // console.log(ReactDOM.findDOMNode(this).scrollTop);
-	        // console.log(value);
-	        ReactDOM.findDOMNode(this).scrollTop = value + "px";
-	      }
-	    }
-	  }]);
-
-	  return CardBar;
-	}(React.Component);
-
-	window.CardBar = CardBar;
-
-/***/ },
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -546,7 +537,7 @@
 	window.Stash = Stash;
 
 /***/ },
-/* 14 */
+/* 5 */
 /***/ function(module, exports) {
 
 	"use strict";
