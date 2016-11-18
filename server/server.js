@@ -17,10 +17,10 @@ app.use(bodyParser.json());
 
 app.use(fibrous.middleware);
 
-app.get('/api/test', (req, res) => {
-    var lol = linkService.runService(req.query.link, '{}');
+app.get('/analyse_links', (req, res) => {
+    var card = linkService.runService(req.query.link, '{}');
     res.json({
-        gh: lol
+        card: card
     });
 });
 
