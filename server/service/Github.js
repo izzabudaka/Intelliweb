@@ -23,9 +23,9 @@ var _getUser = (username, callback) => {
         }
 
         var card = Card();
+        card.addIcon(res.avatar_url);
         card.addTitle("Github User: " + res.name, '#fbfbfb');
         card.addSubtitle(res.login, 'Username', '#fbfbfb');
-        card.addIcon(res.avatar_url);
         card.addButton(res.html_url, 'View Profile', '#fbfbfb', '#222');
         card.addColor("#208bc9");
         callback(null, card.elements);
