@@ -52,7 +52,9 @@ this.plot_radar2 = function(html, callback){
       }
     }
   }
-  callback(result)
+  var card = Card();
+  card.addGraph(result);
+  callback(card)
 }
 
 this.plot_radar = function(html, callback){
