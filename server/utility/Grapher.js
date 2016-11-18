@@ -52,7 +52,7 @@ this.plot_radar2 = function(html, callback){
       }
     }
   }
-  console.log(JSON.stringify(result))
+  callback(result)
 }
 
 this.plot_radar = function(html, callback){
