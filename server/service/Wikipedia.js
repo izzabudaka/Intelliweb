@@ -38,16 +38,20 @@ var get_location_card = function(title, callback){
 
 var get_organization_card = function(title){
 	return new RSVP.Promise(function(fulfill, reject) {
-		var options = {query: title, format: "html", summaryOnly: true};
-		wikipedia.searchArticle(options, function(err, wiki_text){
-		    if(err){
-		      console.log("An error occurred[query=%s, error=%s]", query, err);
-		      reject()
-		    }
-		    image_finder.get_image(title, function(img_url){
-				fulfill([wiki_text, title, img_url])
+		if(title == "SSH")
+			reject()
+		else{
+			var options = {query: title, format: "html", summaryOnly: true};
+			wikipedia.searchArticle(options, function(err, wiki_text){
+			    if(err){
+			      console.log("An error occurred[query=%s, error=%s]", query, err);
+			      reject()
+			    }
+			    image_finder.get_image(title, function(img_url){
+					fulfill([wiki_text, title, img_url])
+			    })
 		    })
-	    })
+		}
 	});
 };
 
