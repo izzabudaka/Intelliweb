@@ -39,11 +39,13 @@ webview.addEventListener('ipc-message', (event) => {
                                             if(buckets[bucket] == undefined){
                                                 buckets[bucket] = [card];
                                             }
-                                            else{
+                                            else {
                                                 buckets[bucket].push(card);
                                             }
                                             if(requestLeft==0){
+                                                console.log("bucket-on");
                                                 console.log(buckets);
+                                                console.log("bucket-off");
                                                 let inner = React.createElement(window.CardBar, {
                                                     height:pageHeight,
                                                     loaded:function(v){sideBar = v},
@@ -69,13 +71,14 @@ webview.addEventListener('ipc-message', (event) => {
                     json:true,
                     body:{text:linkBundle.paragraph}
                 }, function(err, response, body){
+                    console.log("got paragraph data");
+                    requestLeft--;
                     let json = response.body;
+                    console.log(response.body);
                     let cards = json["card"];
                     cards.forEach(card=>{
-                        card = card["card"]
+                        card = card["card"];
                         if(card != undefined) {
-                            requestLeft--;
-                            console.log(linkBundle.posY);
                             let bucket = Math.floor(linkBundle.posY / 250);
                             if(buckets[bucket] == undefined){
                                 buckets[bucket] = [card];
@@ -85,9 +88,6 @@ webview.addEventListener('ipc-message', (event) => {
                             }
                             
                             if(requestLeft==0){
-                                console.log("bucket-on");
-                                console.log(buckets);
-                                console.log("bucket-off");
                                 let inner = React.createElement(window.CardBar, {
                                     height:pageHeight,
                                     loaded:function(v){sideBar = v},
@@ -151,15 +151,29 @@ webview.addEventListener('ipc-message', (event) => {
     // webview.openDevTools();
     // webview.executeJavaScript(scrollCode,false,function(){console.log("code OK")});
 
+function openStash() {
+    console.log("open it");
+}
 
 webview.addEventListener("will-navigate",function(url){
     console.log(url.url);
-    ReactDOM.render(React.createElement(window.Navigator,{url:url.url}),document.getElementById("navigator"));
+    ReactDOM.render(React.createElement(window.Navigator,{url:url.url,openStash:
+function openStash() {
+    console.log("open it");
+}}),document.getElementById("navigator"));
 });
 
 
 });
 
 $(document).ready(function(){
-        ReactDOM.render(React.createElement(window.Navigator,{url:webview.src}),document.getElementById("navigator"));      
+        ReactDOM.render(React.createElement(window.Navigator,{
+            url:webview.src,
+            openStash:
+                function openStash() {
+                    ReactDOM.render(React.createElement(window.Stash,{}),document.getElementById("stash"));
+                    webview.style = "visibility:hidden;";
+                    $("#stash").css("visibility","visible");
+                }
+    }),document.getElementById("navigator"));      
 });
