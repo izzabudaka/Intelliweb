@@ -1,5 +1,60 @@
 var cheerio = require("cheerio");
 var Card = require('../model/Card').Card;
+var COLORS = {
+  1: {backgroundColor: "rgba(179,181,198,0.2)",
+      borderColor: "rgba(179,181,198,1)",
+      pointBackgroundColor: "rgba(179,181,198,1)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(179,181,198,1)"},
+  2: {backgroundColor: "rgba(255,99,132,0.2)",
+      borderColor: "rgba(255,99,132,1)",
+      pointBackgroundColor: "rgba(255,99,132,1)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(255,99,132,1)"},
+  3: {backgroundColor: "rgba(232,179,168,0.2)",
+      borderColor: "rgba(255,137,131,1)",
+      pointBackgroundColor: "rgba(232,105,92,1)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(255,99,132,1)"},
+  4: {backgroundColor: "rgba(232,179,168,0.2)",
+      borderColor: "rgba(255,137,131,1)",
+      pointBackgroundColor: "rgba(232,105,92,1)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(255,99,132,1)"}
+}
+
+function findEmptyLabel(data) {
+  for (var i=0, iLen=data.datasets.length; i<iLen; i++) {
+    if (data.datasets[i].label == " "){
+      data.datasets.splice(i, 1);
+    }
+  }
+}
+
+var set_color = function(dataset){
+  console.log(dataset)
+  var current_idx = 1
+  dataset.forEach(function(label){
+    label["backgroundColor"] = COLORS[current_idx].backgroundColor
+    label["borderColor"] = COLORS[current_idx].borderColor
+    label["pointBackgroundColor"] = COLORS[current_idx].pointBackgroundColor
+    label["pointBorderColor"] = COLORS[current_idx].pointBorderColor
+    label["pointHoverBorderColor"] = COLORS[current_idx].pointHoverBorderColor
+    label["pointHoverBackgroundColor"] = COLORS[current_idx].pointHoverBackgroundColor
+    current_idx++
+  })
+  console.log(dataset)
+}
+
+var clean = function(data){
+  var index = data.labels.indexOf('');
+  data.labels.splice(index, 1);
+  findEmptyLabel(data)
+}
 
 var reverse_factorial = function(n){
 	if (n == 0 || n == 1){
@@ -53,13 +108,16 @@ this.plot_radar2 = function(html, callback){
         }
       }
     }
-    var card = Card();
+    clean(result)
 
+    var card = Card();
+    set_color(result["datasets"])
     card.addTitle("Graph: Figure 1");
     card.addGraph(result);
-    card.addColor("#fffff");
+    card.addColor("#ffffff");
     callback(card)
   } catch(e){
+    console.log(e)
     callback(Card())
   }
 }
