@@ -108,7 +108,7 @@ this.plot_radar2 = function(html, callback){
         }
       }
     }
-    if(result.labels.indexOf("Python") == -1){
+    if(result.labels.indexOf("Performance") == -1){
       callback(Card())
     } else{
       clean(result)
