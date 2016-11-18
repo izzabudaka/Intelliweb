@@ -9,6 +9,8 @@ var $ = require('jQuery');
 let webview  = document.getElementById("webview");
 console.log(webview);
 
+var ReactDOM = require("react-dom");
+var React = require("react");
 
 webview.addEventListener('did-start-loading', function() {
 let scrollCode = "const {ipcRenderer} = require('electron');"+
@@ -16,17 +18,19 @@ let scrollCode = "const {ipcRenderer} = require('electron');"+
   "ipcRenderer.sendToHost('pong')" +
 "}";
 console.log(JSON.parse(JSON.stringify(webview)));
-    webview.addEventListener('ipc-message', (event,scrollTop) => {
-        console.log(event.args[0]);
+    webview.addEventListener('ipc-message', (event) => {
+        if(event.channel === "get_links"){
+            console.log(event.args[0]);
+        }
+        if(event.channel === "page_height"){
+            ReactDOM.render(React.createElement(window.CardBar, {height:event.args[0]}),document.getElementById("rail"));
+        }
     });
-    webview.openDevTools();
+    // webview.openDevTools();
     // webview.executeJavaScript(scrollCode,false,function(){console.log("code OK")});
 });
 
 
 $(document).ready(function(){
-    var ReactDOM = require("react-dom");
-    var React = require("react");
-
-    ReactDOM.render(React.createElement(window.CardBar, null),document.getElementById("rail"));
+                
 });

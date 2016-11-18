@@ -18,5 +18,6 @@ window.onload = function() {var list = Array.prototype.slice.call(document.getEl
       
       });
       ipcRenderer.sendToHost('get_links', obj);
-      console.log(obj);
+
+      ipcRenderer.sendToHost("page_height",window.outerHeight);
 };

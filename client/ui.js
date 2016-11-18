@@ -78,14 +78,15 @@
 	  _createClass(CardBar, [{
 	    key: "render",
 	    value: function render() {
+	      var rootStyle = {
+	        height: this.props.height + "px",
+	        background: "red"
+	      };
+	      console.log(this.props.height);
 	      return React.createElement(
 	        "div",
-	        null,
-	        React.createElement(
-	          "h1",
-	          null,
-	          "Cards"
-	        )
+	        { style: { overflowY: "scroll" } },
+	        React.createElement("div", { style: rootStyle })
 	      );
 	    }
 	  }]);

@@ -3,8 +3,17 @@ class CardBar extends React.Component {
     super(props);
   }
   render() {
+    let rootStyle ={
+      height:this.props.height + "px",
+      background:"red"
+    };
+    console.log(this.props.height);
     return (
-      <div><h1>Cards</h1></div>
+      <div style={{overflowY:"scroll"}}>
+        <div style={rootStyle}>
+          
+        </div>
+      </div>
     );
   }
 }
