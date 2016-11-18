@@ -54,19 +54,21 @@ var get_organization_card = function(title){
 this.get_entity_cards = function(entities, callback){
 	result = []
 	var promises = []
-
-	entities["ORGANIZATION"]
-		.forEach(function(val){
-			promises.push(get_organization_card(val))
-		})
-	entities["PERSON"]
-		.forEach(function(val){
-			promises.push(get_person_card(val))
-		})
-	entities["LOCATION"]
-		.forEach(function(val){
-			promises.push(get_location_card(val))
-		})
+	if(entities["ORGANIZATION"] != undefined)
+		entities["ORGANIZATION"]
+			.forEach(function(val){
+				promises.push(get_organization_card(val))
+			})
+	if(entities["PERSON"] != undefined)
+		entities["PERSON"]
+			.forEach(function(val){
+				promises.push(get_person_card(val))
+			})
+	if(entities["LOCATION"] != undefined)
+		entities["LOCATION"]
+			.forEach(function(val){
+				promises.push(get_location_card(val))
+			})
 	console.log(promises.length)
 	RSVP.all(promises)
 		.then(function(cards) {
