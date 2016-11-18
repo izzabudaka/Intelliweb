@@ -11,7 +11,12 @@ function _getProduct(url, callback) {
         var doc =  dom.jsdom(body);
         try {
             var title = doc.querySelector('#productTitle').innerHTML.trim();
-            var price = doc.querySelector('#priceblock_ourprice').innerHTML;
+            var price = doc.querySelector('#priceblock_ourprice');
+            if(price == undefined){
+                price = doc.querySelector('#priceblock_saleprice').innerHTML
+            } else{
+                price = price.innerHTML
+            }
             var image = doc.querySelector('#landingImage').src;
 
             var descriptionEle = doc.querySelector('#feature-bullets .technicalData');
@@ -30,6 +35,7 @@ function _getProduct(url, callback) {
             callback(null, card.elements);
         }
         catch (e) {
+            console.log(e)
             callback(null, []);
         }
     });
