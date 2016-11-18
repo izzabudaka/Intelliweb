@@ -23,10 +23,9 @@ function _getAnswer(url, callback) {
         }
 
         var card = Card();
-        card.addTitle(title);
-        card.addSubtitle('Answer');
-        card.addSubtitle(answer);
-        card.addButton(url, 'View question');
+        card.addTitle(title, '#fbfbfb');
+        card.addSubtitle(answer, 'Answer', '#fbfbfb');
+        card.addButton(url, 'View question', '#fbfbfb', '#222');
         card.addColor("#f75200"); // light green
         callback(null, card.elements);
     });

@@ -49,37 +49,37 @@ var get_organization_card = function(title){
 		    })
 	    })
 	});
-}
+};
 
 this.get_entity_cards = function(entities, callback){
-	result = []
-	var promises = []
+	result = [];
+	var promises = [];
 	if(entities["ORGANIZATION"] != undefined)
 		new Set(entities["ORGANIZATION"])
 			.forEach(function(val){
 				promises.push(get_organization_card(val))
-			})
+			});
 	if(entities["PERSON"] != undefined)
 		new Set(entities["PERSON"])
 			.forEach(function(val){
 				promises.push(get_person_card(val))
-			})
+			});
 	if(entities["LOCATION"] != undefined)
 		new Set(entities["LOCATION"])
 			.forEach(function(val){
 				promises.push(get_location_card(val))
-			})
+			});
 	RSVP.all(promises)
 		.then(function(cards) {
 			cards.forEach(function(card){
-				var no_html = card[0].replace(/<(?:.|\n)*?>/gm, '')	
+				var no_html = card[0].replace(/<(?:.|\n)*?>/gm, '')	;
 				var cardEle = Card();
-				cardEle.addTitle(card[1]);
-				cardEle.addSubtitle(no_html);
+				cardEle.addTitle(card[1], '#fbfbfb');
+				cardEle.addSubtitle(no_html, '', '#fbfbfb');
 				cardEle.addImage(card[2]);
 				cardEle.addColor("#565656"); // some shade of red
 				result.push({ card: cardEle.elements });
-			})
+			});
 			callback(result)
 		})
-}
+};

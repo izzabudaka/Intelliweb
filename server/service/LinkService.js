@@ -21,8 +21,8 @@ exports.runService = (url) => {
     }
 };
 
-register(/github\.com\/([A-Za-z0-9]+)\/*(.*)/, (url) => {
-    var matches = url.match(/github\.com\/([A-Za-z0-9]+)\/*(.*)/);
+register(/github\.com\/([A-Za-z0-9-_]+)\/*(.*)/, (url) => {
+    var matches = url.match(/github\.com\/([A-Za-z0-9-_]+)\/*(.*)/);
     if (matches[2] == '') {
         return github.getUser(matches[1]);
     }
