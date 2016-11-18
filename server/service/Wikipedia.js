@@ -64,7 +64,7 @@ this.get_entity_cards = function(entities, callback){
 		cardEle.addTitle(title);
 		cardEle.addSubtitle(no_html);
 		cardEle.addImage(img_url);
-		result.push({ card: cardEle });
+		result.push({ card: cardEle.elements });
 
 		last_processed = processed
 		processed++
