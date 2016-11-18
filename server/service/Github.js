@@ -22,7 +22,7 @@ var _getUser = (username, callback) => {
         card.addSubtitle(res.login);
         card.addImage(res.avatar_url);
         card.addButton(res.html_url, 'View Profile');
-        cardEle.addColor("#CFD8DC"); // some off-white here
+        card.addColor("#CFD8DC"); // some off-white here
         callback(null, card.elements);
     });
 };
