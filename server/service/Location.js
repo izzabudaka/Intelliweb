@@ -43,7 +43,7 @@ var get_geocode = function(location_txt, callback){
 	  "language":   "en",
 	}
 	gmAPI.geocode(geocodeParams, function(err, result){
-      if(result.status != "ZERO_RESULTS"){
+      if(result != undefined && result.status != "ZERO_RESULTS"){
         callback(result.results[0].geometry.location, result.results[0].geometry.bounds);
       } else{
         console.log("no matching locations found")
