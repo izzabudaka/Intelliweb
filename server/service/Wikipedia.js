@@ -1,6 +1,8 @@
 var wikipedia = require("wikipedia-js");
 var modler = require("../model/Modeler");
 var Card = require('../model/Card').Card;
+var location = require("./Location");
+var image_finder = require("./ImageFinder");
 
 var async = require('async');
 
@@ -11,7 +13,9 @@ var get_person_card = function(title, callback){
 	      console.log("An error occurred[query=%s, error=%s]", query, err);
 	      return;
 	    }
-    	callback(wiki_text, title)
+	    image_finder.get_image(title, function(img_url){
+			callback(wiki_text, title, img_url)
+	    })
     })
 }
 
@@ -22,7 +26,9 @@ var get_location_card = function(title, callback){
 	      console.log("An error occurred[query=%s, error=%s]", query, err);
 	      return;
 	    }
-    	callback(wiki_text, title)
+	    location.get_map_image(title, function(img_url){
+			callback(wiki_text, title, img_url)
+	    })
     })
 }
 
@@ -34,7 +40,9 @@ var get_organization_card = function(title, callback){
 	      console.log("An error occurred[query=%s, error=%s]", query, err);
 	      return;
 	    }
-    	callback(wiki_text, title)
+	    image_finder.get_image(title, function(img_url){
+			callback(wiki_text, title, img_url)
+	    })
     })
 }
 
@@ -48,13 +56,14 @@ this.get_entity_cards = function(entities, callback){
 		size += entities[key].length
 	})
 
-	var addToResult = function(card, title){
+	var addToResult = function(card, title, img_url){
 		var no_html = card.replace(/<(?:.|\n)*?>/gm, '')
 		//result.push(modler.get_title_sub(title, no_html))
 
 		var cardEle = Card();
 		cardEle.addTitle(title);
 		cardEle.addSubtitle(no_html);
+		cardEle.addImage(img_url);
 		result.push(cardEle);
 
 		last_processed = processed
