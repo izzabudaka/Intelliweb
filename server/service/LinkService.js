@@ -1,5 +1,6 @@
 var github = require('./Github'),
-    amazon = require('./Amazon');
+    amazon = require('./Amazon'),
+    medium = require('./Medium');
 
 var services = [];
 
@@ -10,15 +11,15 @@ var register = (regex, func) => {
     });
 };
 
-exports.runService = (url, data) => {
+exports.runService = (url) => {
     for (var ser of services) {
         if (url.match(ser.regex)) {
-            return ser.func(url, data);
+            return ser.func(url);
         }
     }
 };
 
-register(/github\.com\/([A-Za-z0-9]+)\/*(.*)/, (url, data) => {
+register(/github\.com\/([A-Za-z0-9]+)\/*(.*)/, (url) => {
     var matches = url.match(/github\.com\/([A-Za-z0-9]+)\/*(.*)/);
     if (matches[2] == '') {
         return github.getUser(matches[1]);
@@ -28,6 +29,10 @@ register(/github\.com\/([A-Za-z0-9]+)\/*(.*)/, (url, data) => {
     }
 });
 
-register(/amazon.co.uk|amazon.com/, (url, data) => {
+register(/amazon.co.uk|amazon.com/, (url) => {
     return amazon.getProduct(url);
+});
+
+register(/medium.com\/@.*\/.+/, (url) => {
+    return medium.getPost(url);
 });
