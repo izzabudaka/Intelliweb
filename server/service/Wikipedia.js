@@ -78,6 +78,7 @@ this.get_entity_cards = function(entities, callback){
 				cardEle.addTitle(card[1]);
 				cardEle.addSubtitle(no_html);
 				cardEle.addImage(card[2]);
+				cardEle.addColor("#EF5350"); // some shade of red
 				result.push({ card: cardEle.elements });
 			})
 			callback(result)

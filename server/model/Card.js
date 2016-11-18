@@ -52,6 +52,15 @@ exports.Card = () => {
         })
     };
 
+    var addColor = (color) => {
+        elements.push({
+            type: 5,
+            payload: {
+                color: color
+            }
+        })
+    };
+
     return {
         toJson: toJson,
         elements: elements,
