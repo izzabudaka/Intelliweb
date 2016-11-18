@@ -69,7 +69,6 @@ this.get_entity_cards = function(entities, callback){
 			.forEach(function(val){
 				promises.push(get_location_card(val))
 			})
-	console.log(promises.length)
 	RSVP.all(promises)
 		.then(function(cards) {
 			cards.forEach(function(card){

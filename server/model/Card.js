@@ -62,6 +62,7 @@ exports.Card = () => {
     };
 
     return {
+        addColor: addColor,
         toJson: toJson,
         elements: elements,
         addTitle: addTitle,
