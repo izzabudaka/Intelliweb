@@ -22,10 +22,62 @@ var sideBar;
 webview.addEventListener('ipc-message', (event) => {
 
         if(event.channel === "get_links"){
-            console.log(event.args[0]);
+            //console.log(event.args[0]);
+            var requestLeft = event.args[0].length;
+            var request = require('request');
+            request("http://72dbcb84.ngrok.io/analyse_links?link="+event.args[0], function(error, response, body){
+                if(!error && response.statusCode==200){
+                    console.log(body);
+                    requestLeft--;
+                    
+                    if(requestLeft==0){
+                        process.nextTick();
+                    }
+                }
+            });
+        }
+        if(event.channel === "get_paragraphs"){
+            //console.log(event.args[0]);
+            var requestLeft = event.args[0].length;
+            var request = require('request');
+            request('http://72dbcb84.ngrok.io/analyse_text?link='+event.args[0], function(error, response, body){
+                if(!error && response.statusCode==200){
+                    console.log(body);
+                    requestLeft--;
+
+                    if(requestLeft==0){
+                        process.nextTick();
+                    }
+                }
+            });
+        }
+        if(event.channel === "get_images"){
+            console.log(event.args[0]);       
+            var request = require('request');
+            request('', function(error, response, body){
+                if(!error && response.statusCode==200){
+                    console.log(body);
+                }
+            });
+        }
+        if(event.channel === "get_titles"){
+            //console.log(event.args[0]);
+            var requestLeft = event.args[0].length;
+            var request = require('request');
+            request('http://72dbcb84.ngrok.io/analyse_text?link='+event.args[0], function(error, response, body){
+                if(!error && response.statusCode==200){
+                    console.log(body);
+                    requestLeft--;
+
+                    if(requestLeft==0){
+                        process.nextTick();
+                    }
+
+                }
+            });
         }
         if(event.channel === "page_height"){
-            let inner = React.createElement(window.CardBar, {height:event.args[0],loaded:function(v){sideBar = v}});
+            let inner = React.createElement(window.CardBar, {height:event.args[0],loaded:function(v){sideBar = v},onURLClicked:(url)=>webview.src=url});
             ReactDOM.render(inner,document.getElementById("rail"));
         }
         if(event.channel === "scrolling"){
@@ -36,9 +88,16 @@ webview.addEventListener('ipc-message', (event) => {
     });
     // webview.openDevTools();
     // webview.executeJavaScript(scrollCode,false,function(){console.log("code OK")});
+
+
+webview.addEventListener("will-navigate",function(url){
+    console.log(url.url);
+    ReactDOM.render(React.createElement(window.Navigator,{url:url.url}),document.getElementById("navigator"));
 });
 
 
+});
+
 $(document).ready(function(){
-                
+        ReactDOM.render(React.createElement(window.Navigator,{url:webview.src}),document.getElementById("navigator"));      
 });

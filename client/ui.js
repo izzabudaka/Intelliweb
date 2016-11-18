@@ -46,11 +46,15 @@
 
 	'use strict';
 
-	var _Card = __webpack_require__(2);
+	var _Card = __webpack_require__(1);
 
 	var _Card2 = _interopRequireDefault(_Card);
 
-	var _CardBar = __webpack_require__(1);
+	var _Navigator = __webpack_require__(3);
+
+	var _Navigator2 = _interopRequireDefault(_Navigator);
+
+	var _CardBar = __webpack_require__(2);
 
 	var _CardBar2 = _interopRequireDefault(_CardBar);
 
@@ -58,73 +62,6 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var CardBar = function (_React$Component) {
-	  _inherits(CardBar, _React$Component);
-
-	  function CardBar(props) {
-	    _classCallCheck(this, CardBar);
-
-	    return _possibleConstructorReturn(this, (CardBar.__proto__ || Object.getPrototypeOf(CardBar)).call(this, props));
-	  }
-
-	  _createClass(CardBar, [{
-	    key: "render",
-	    value: function render() {
-	      var rootStyle = {
-	        height: this.props.height + "px"
-	      };
-	      console.log(this.props.height);
-	      var heights = [];
-	      for (var i = 0; i < this.props.height / 250; i++) {
-	        heights.push(React.createElement(
-	          "div",
-	          { style: { height: "250px" } },
-	          React.createElement(window.Card, null)
-	        ));
-	      }
-	      var remainder = this.props.height % 250;
-	      if (remainder > 0) heights.push(React.createElement("div", { style: { height: remainder + "px" } }));
-	      this.props.loaded(this);
-	      return React.createElement(
-	        "div",
-	        { style: { overflowY: "scroll" } },
-	        React.createElement(
-	          "div",
-	          { style: rootStyle },
-	          heights
-	        )
-	      );
-	    }
-	  }, {
-	    key: "updateScrollPosition",
-	    value: function updateScrollPosition(value) {
-	      if (ReactDOM.findDOMNode(this) != undefined) {
-	        console.log(ReactDOM.findDOMNode(this).scrollTop);
-	        console.log(value);
-	        ReactDOM.findDOMNode(this).scrollTop = value + "px";
-	      }
-	    }
-	  }]);
-
-	  return CardBar;
-	}(React.Component);
-
-	window.CardBar = CardBar;
-
-/***/ },
-/* 2 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -156,10 +93,11 @@
 	                border: "1px solid rgba(0,0,0,0.05)",
 	                margin: "10px",
 	                background: "white",
-	                overflowY: "scroll"
+	                overflowY: "scroll",
+	                display: "inline-block"
 	            };
 
-	            var cardData = [{ type: 2, payload: { url: "https://assets-cdn.github.com/images/modules/open_graph/github-mark.png" } }, { type: 0, payload: { text: "Project X" } }, { type: 1, payload: { title: "Stars", subtitle: "585" } }, { type: 1, payload: { title: "Description", subtitle: "This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas" } }, { type: 3, payload: { text: "See repo", url: "http://github.com" } }, { type: 3, payload: { text: "Star this", url: "http://github.com" } }];
+	            var cardData = [{ type: 2, payload: { url: "https://assets-cdn.github.com/images/modules/open_graph/github-mark.png", icon: true } }, { type: 0, payload: { text: "Project X" } }, { type: 1, payload: { title: "Stars", subtitle: "585" } }, { type: 1, payload: { title: "Forks", subtitle: "111" } }, { type: 1, payload: { title: "Description", subtitle: "This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas" } }, { type: 3, payload: { text: "See repo", url: "http://github.com" } }, { type: 2, payload: { url: "http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg", icon: false } }];
 
 	            var elements = cardData.map(function (x) {
 	                return this.getElement(x.type, x.payload);
@@ -174,6 +112,8 @@
 	    }, {
 	        key: "getElement",
 	        value: function getElement(type, payload) {
+	            var _this2 = this;
+
 	            if (type == 0) {
 	                return React.createElement(
 	                    "h1",
@@ -211,7 +151,7 @@
 	                        payload["subtitle"]
 	                    )
 	                );
-	            } else if (type == 2) {
+	            } else if (type == 2 && payload["icon"] == true) {
 	                return React.createElement(
 	                    "div",
 	                    { style: {
@@ -220,6 +160,17 @@
 	                        } },
 	                    React.createElement("img", { style: {
 	                            maxHeight: "60px", maxWidth: "60px", display: "inline-block"
+	                        }, src: payload["url"] })
+	                );
+	            } else if (type == 2) {
+	                return React.createElement(
+	                    "div",
+	                    { style: {
+	                            width: "100%", textAlign: "center",
+	                            marginBottom: "5px"
+	                        } },
+	                    React.createElement("img", { style: {
+	                            width: "180px", maxWidth: "180px", display: "inline-block"
 	                        }, src: payload["url"] })
 	                );
 	            } else if (type == 3) {
@@ -233,6 +184,8 @@
 	                            borderRadius: "5px",
 	                            border: "1px solid rgba(0,0,0,0.05)",
 	                            cursor: "pointer"
+	                        }, onClick: function onClick() {
+	                            return _this2.onURLClicked(payload["url"]);
 	                        } },
 	                    React.createElement(
 	                        "h1",
@@ -250,12 +203,156 @@
 	                );
 	            }
 	        }
+	    }, {
+	        key: "onURLClicked",
+	        value: function onURLClicked(url) {
+	            this.props.onURLClicked(url);
+	        }
 	    }]);
 
 	    return Card;
 	}(React.Component);
 
 	window.Card = Card;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CardBar = function (_React$Component) {
+	  _inherits(CardBar, _React$Component);
+
+	  function CardBar(props) {
+	    _classCallCheck(this, CardBar);
+
+	    return _possibleConstructorReturn(this, (CardBar.__proto__ || Object.getPrototypeOf(CardBar)).call(this, props));
+	  }
+
+	  _createClass(CardBar, [{
+	    key: "render",
+	    value: function render() {
+	      var _this2 = this;
+
+	      var rootStyle = {
+	        height: this.props.height + "px"
+	      };
+	      console.log(this.props.height);
+	      var heights = [];
+	      for (var i = 0; i < this.props.height / 250; i++) {
+	        heights.push(React.createElement(
+	          "div",
+	          { style: { width: "100%", overflow: "scroll" } },
+	          React.createElement(
+	            "div",
+	            { style: { height: "250px", width: "750px" } },
+	            React.createElement(window.Card, { onURLClicked: function onURLClicked(url) {
+	                return _this2.props.onURLClicked(url);
+	              } }),
+	            React.createElement(window.Card, { onURLClicked: function onURLClicked(url) {
+	                return _this2.props.onURLClicked(url);
+	              } }),
+	            React.createElement(window.Card, { onURLClicked: function onURLClicked(url) {
+	                return _this2.props.onURLClicked(url);
+	              } })
+	          )
+	        ));
+	      }
+	      var remainder = this.props.height % 250;
+	      if (remainder > 0) heights.push(React.createElement("div", { style: { height: remainder + "px" } }));
+	      this.props.loaded(this);
+	      return React.createElement(
+	        "div",
+	        { style: { overflowY: "scroll" } },
+	        React.createElement(
+	          "div",
+	          { style: rootStyle },
+	          heights
+	        )
+	      );
+	    }
+	  }, {
+	    key: "updateScrollPosition",
+	    value: function updateScrollPosition(value) {
+	      if (ReactDOM.findDOMNode(this) != undefined) {
+	        console.log(ReactDOM.findDOMNode(this).scrollTop);
+	        console.log(value);
+	        ReactDOM.findDOMNode(this).scrollTop = value + "px";
+	      }
+	    }
+	  }]);
+
+	  return CardBar;
+	}(React.Component);
+
+	window.CardBar = CardBar;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Navigator = function (_React$Component) {
+	  _inherits(Navigator, _React$Component);
+
+	  function Navigator(props) {
+	    _classCallCheck(this, Navigator);
+
+	    return _possibleConstructorReturn(this, (Navigator.__proto__ || Object.getPrototypeOf(Navigator)).call(this, props));
+	  }
+
+	  _createClass(Navigator, [{
+	    key: "render",
+	    value: function render() {
+	      var rootStyle = {
+	        position: "relative", width: "100%", height: "100%"
+	      };
+	      var inputHolderStyle = {
+	        position: "absolute",
+	        left: "100px", top: "6px", bottom: "11px", right: "100px",
+	        borderRadius: "10px", border: "1px solid rgba(0,0,0,0.07)"
+	      };
+	      var inputStyle = {
+	        width: "100%",
+	        height: "100%",
+	        background: "",
+	        paddingRight: "10px"
+	      };
+	      console.log("rendering:" + this.props.url);
+	      return React.createElement(
+	        "div",
+	        { style: rootStyle },
+	        React.createElement(
+	          "div",
+	          { style: inputHolderStyle },
+	          React.createElement("input", { style: inputStyle, defaultValue: this.props.url })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Navigator;
+	}(React.Component);
+
+	window.Navigator = Navigator;
 
 /***/ }
 /******/ ]);

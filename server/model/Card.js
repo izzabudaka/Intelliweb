@@ -9,7 +9,7 @@ exports.Card = () => {
         elements.push({
             type: 0,
             payload: {
-                title: title
+                text: title
             }
         })
     };
