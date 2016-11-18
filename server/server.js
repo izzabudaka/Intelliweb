@@ -26,7 +26,7 @@ app.post('/analyse_table', function(req, res) {
 	console.log(req.body.data);
 	grapher.get_plot(req.body.data, function(parsed){
 		res.json({
-			card: parsed
+			card: parsed.toJson()
 		})
 	})
 });
@@ -37,7 +37,7 @@ app.post('/analyse_txt', function(req, res) {
 		wikipedia_service.get_entity_cards(entities, function(entity_cards){
 			console.log("MADE");
 			res.json({
-				card: entity_cards
+				card: entity_cards.toJson()
 			})
 		})
 	})
