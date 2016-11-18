@@ -78,15 +78,35 @@
 	  _createClass(CardBar, [{
 	    key: "render",
 	    value: function render() {
+	      var rootStyle = {
+	        height: this.props.height + "px"
+	      };
+	      console.log(this.props.height);
+	      var heights = [];
+	      for (var i = 0; i < this.props.height / 200; i++) {
+	        heights.push(React.createElement("div", { style: { height: "200px", borderBottom: "1px solid lightgray" } }));
+	      }
+	      var remainder = this.props.height % 200;
+	      if (remainder > 0) heights.push(React.createElement("div", { style: { height: remainder + "px" } }));
+	      this.props.loaded(this);
 	      return React.createElement(
 	        "div",
-	        null,
+	        { style: { overflowY: "scroll" } },
 	        React.createElement(
-	          "h1",
-	          null,
-	          "Cards"
+	          "div",
+	          { style: rootStyle },
+	          heights
 	        )
 	      );
+	    }
+	  }, {
+	    key: "updateScrollPosition",
+	    value: function updateScrollPosition(value) {
+	      if (ReactDOM.findDOMNode(this) != undefined) {
+	        console.log(ReactDOM.findDOMNode(this).scrollTop);
+	        console.log(value);
+	        ReactDOM.findDOMNode(this).scrollTop = value + "px";
+	      }
 	    }
 	  }]);
 

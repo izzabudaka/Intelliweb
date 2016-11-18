@@ -1,5 +1,6 @@
 var wikipedia = require("wikipedia-js");
 var modler = require("../model/Modeler");
+var Card = require('../model/Card').Card;
 
 var async = require('async');
 
@@ -49,7 +50,13 @@ this.get_entity_cards = function(entities, callback){
 
 	var addToResult = function(card, title){
 		var no_html = card.replace(/<(?:.|\n)*?>/gm, '')
-		result.push(modler.get_title_sub(title, no_html))
+		//result.push(modler.get_title_sub(title, no_html))
+
+		var cardEle = new Card();
+		cardEle.addTitle(title);
+		cardEle.addSubtitle(no_html);
+		result.push(cardEle);
+
 		last_processed = processed
 		processed++
 		if(processed == size)
