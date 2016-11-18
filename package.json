@@ -24,6 +24,7 @@
     "node-google-image-search": "^1.0.2",
     "node-ner": "0.0.3",
     "node-wikipedia": "0.0.2",
+    "node-wit": "^4.1.0",
     "request": "^2.78.0",
     "textversionjs": "^1.0.2",
     "wikijs": "^1.1.1",

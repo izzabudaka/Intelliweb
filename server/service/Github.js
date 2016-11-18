@@ -38,6 +38,9 @@ var _getRepo = (owner, repoName, callback) => {
         card.addTitle(res.name);
         card.addSubtitle(res.owner.login);
         card.addSubtitle(res.owner.description);
+        card.addSubtitle(res.stargazers_count, 'Stars');
+        card.addSubtitle(res.watchers_count, 'Watchers');
+        card.addSubtitle(res.forks, 'Forks');
         card.addButton(res.html_url, 'View Repo');
 
         callback(null, card.elements);
