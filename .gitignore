@@ -3,3 +3,4 @@ node_modules
 start.bat
 test_*
 \357*
+cert.pfx
