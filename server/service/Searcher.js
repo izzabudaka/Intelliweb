@@ -1,5 +1,5 @@
 const {Wit, log} = require('node-wit');
-const client = new Wit({accessToken: 'A4C3XYM2XQJY62NWTWS75AL3QWPTOWP6'});
+const client = new Wit({accessToken: 'AIzaSyCdXimkwNFZgVICv2awOhK8Tvk5e7BqNiM'});
 
 var parse_query = function(query, callback){
   client.message(query, {})
@@ -19,6 +19,8 @@ this.search = function(query, cards, callback){
       async.forEach(cards, function(card){
         if(card[attribute] > condition)
           result.push(card)
+      }).then(function(){
+        return result
       })
     }
   })

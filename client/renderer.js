@@ -11,6 +11,8 @@ console.log(webview);
 
 var ReactDOM = require("react-dom");
 var React = require("react");
+var request = require('request');
+
 
 webview.addEventListener('did-start-loading', function() {
 let scrollCode = "const {ipcRenderer} = require('electron');"+
@@ -19,66 +21,117 @@ let scrollCode = "const {ipcRenderer} = require('electron');"+
 "}";
 console.log(JSON.parse(JSON.stringify(webview)));
 var sideBar;
+var pageHeight;
 webview.addEventListener('ipc-message', (event) => {
 
+        var buckets = {};
         if(event.channel === "get_links"){
-            //console.log(event.args[0]);
             var requestLeft = event.args[0].length;
-            var request = require('request');
-            request("http://72dbcb84.ngrok.io/analyse_links?link="+event.args[0], function(error, response, body){
-                if(!error && response.statusCode==200){
-                    console.log(body);
-                    requestLeft--;
-                    
-                    if(requestLeft==0){
-                        process.nextTick();
+            event.args[0].forEach(function(linkBundle){
+                    request("http://127.0.0.1:3000/analyse_links?link=" + linkBundle.link, function(error, response, body){
+                                    if(!error && response.statusCode==200){
+                                        requestLeft--;
+                                        let json = JSON.parse(response.body);
+                                        let card = json["card"];
+                                        if(card != undefined && card.filter((x)=>x == undefined).length == 0) {
+                                            
+                                            let bucket = Math.floor(linkBundle.posY / 250);
+                                            if(buckets[bucket] == undefined){
+                                                buckets[bucket] = [card];
+                                            }
+                                            else{
+                                                buckets[bucket].push(card);
+                                            }
+                                            if(requestLeft==0){
+                                                console.log(buckets);
+                                                let inner = React.createElement(window.CardBar, {
+                                                    height:pageHeight,
+                                                    loaded:function(v){sideBar = v},
+                                                    onURLClicked:(url)=>webview.src=url,
+                                                    buckets:buckets});
+                                                ReactDOM.render(inner,document.getElementById("rail"));
+                                            }
+                                        }    
                     }
-                }
+                    });
             });
+            
         }
+        //post
+        //body -> {text:""}
+        //card
         if(event.channel === "get_paragraphs"){
-            //console.log(event.args[0]);
             var requestLeft = event.args[0].length;
-            var request = require('request');
-            request('http://72dbcb84.ngrok.io/analyse_text?link='+event.args[0], function(error, response, body){
-                if(!error && response.statusCode==200){
-                    console.log(body);
-                    requestLeft--;
-
-                    if(requestLeft==0){
-                        process.nextTick();
-                    }
-                }
+            event.args[0].forEach(function(linkBundle){
+                request({
+                    url:"http://127.0.0.1:3000/analyse_txt",
+                    method:"POST",
+                    json:true,
+                    body:{text:linkBundle.paragraph}
+                }, function(err, response, body){
+                    let json = response.body;
+                    let cards = json["card"];
+                    cards.forEach(card=>{
+                        card = card["card"]
+                        if(card != undefined) {
+                            requestLeft--;
+                            console.log(linkBundle.posY);
+                            let bucket = Math.floor(linkBundle.posY / 250);
+                            if(buckets[bucket] == undefined){
+                                buckets[bucket] = [card];
+                            }
+                            else{
+                                buckets[bucket].push(card);
+                            }
+                            
+                            if(requestLeft==0){
+                                console.log("bucket-on");
+                                console.log(buckets);
+                                console.log("bucket-off");
+                                let inner = React.createElement(window.CardBar, {
+                                    height:pageHeight,
+                                    loaded:function(v){sideBar = v},
+                                    onURLClicked:(url)=>webview.src=url,
+                                    buckets:buckets});
+                                ReactDOM.render(inner,document.getElementById("rail"));
+                            }
+                        }
+                        });
+                    
+                });
+                     
+                    
+                
             });
         }
-        if(event.channel === "get_images"){
-            console.log(event.args[0]);       
-            var request = require('request');
-            request('', function(error, response, body){
-                if(!error && response.statusCode==200){
-                    console.log(body);
-                }
-            });
-        }
-        if(event.channel === "get_titles"){
-            //console.log(event.args[0]);
-            var requestLeft = event.args[0].length;
-            var request = require('request');
-            request('http://72dbcb84.ngrok.io/analyse_text?link='+event.args[0], function(error, response, body){
-                if(!error && response.statusCode==200){
-                    console.log(body);
-                    requestLeft--;
+        // if(event.channel === "get_images"){
+        //     console.log(event.args[0]);       
+        //     request('', function(error, response, body){
+        //         if(!error && response.statusCode==200){
+        //             console.log(body);
+        //         }
+        //     });
+        // }
+        // if(event.channel === "get_titles"){
+        //     //console.log(event.args[0]);
+        //     var requestLeft = event.args[0].length;
+        //     request('http://72dbcb84.ngrok.io/analyse_text?link='+event.args[0], function(error, response, body){
+        //         if(!error && response.statusCode==200){
+        //             console.log(body);
+        //             requestLeft--;
 
-                    if(requestLeft==0){
-                        process.nextTick();
-                    }
+        //             if(requestLeft==0){
+        //                 process.nextTick();
+        //             }
 
-                }
-            });
-        }
+        //         }
+        //     });
+        // }
         if(event.channel === "page_height"){
-            let inner = React.createElement(window.CardBar, {height:event.args[0],loaded:function(v){sideBar = v},onURLClicked:(url)=>webview.src=url});
-            ReactDOM.render(inner,document.getElementById("rail"));
+            console.log(event.args[0])
+            pageHeight = event.args[0];
+            // let inner = React.createElement(window.CardBar, {height:event.args[0],loaded:function(v){sideBar = v},onURLClicked:(url)=>webview.src=url});
+            // ReactDOM.render(inner,document.getElementById("rail"));
         }
         if(event.channel === "scrolling"){
             if(sideBar != undefined){

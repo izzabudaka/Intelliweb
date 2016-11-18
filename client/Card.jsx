@@ -12,33 +12,56 @@ class Card extends React.Component {
       margin:"10px",
       background:"white",
       overflowY:"scroll",
-      display:"inline-block"
+      display:"inline-block",
+      position:"relative"
     };
 
-    let cardData = [
-        {type:2,payload:{url:"https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",icon:true}},
-        {type:0,payload:{text:"Project X"}},
-        {type:1,payload:{title:"Stars",subtitle:"585"}},
-        {type:1,payload:{title:"Forks",subtitle:"111"}},
-        {type:1,payload:{title:"Description",subtitle:"This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas"}},
-        {type:3,payload:{text:"See repo", url:"http://github.com"}},
-        {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
-    ];
+    // let cardData = [
+    //     {type:2,payload:{url:"https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",icon:true}},
+    //     {type:0,payload:{text:"Project X"}},
+    //     {type:1,payload:{title:"Stars",subtitle:"585"}},
+    //     {type:1,payload:{title:"Forks",subtitle:"111"}},
+    //     {type:1,payload:{title:"Description",subtitle:"This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas"}},
+    //     {type:3,payload:{text:"See repo", url:"http://github.com"}},
+    //     {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
+    // ];
 
-    let elements = cardData.map(function(x) {
+    let elements = this.props.data.map(function(x) {
+        console.log(x);    
         return this.getElement(x.type,x.payload);
     }.bind(this));
-   
+    
+
     return (
       <div style={rootStyle}>
             {elements}
+            <span style={{
+                display:"inline-block",
+                position:"absolute",
+                top:"5px",right:"0px",width:"30px",height:"30px",textAlign:"center",cursor:"pointer"
+            }} onClick={this.stash.bind(this)}>
+                ☆
+            </span>
       </div>
     );
   }
 
+  stash(e){
+      e.target.remove();
+  }
+
+   guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+    }
   getElement(type,payload){
       if(type == 0){
-          return <h1 style={{
+          return <h1 key={this.guid()} style={{
               margin:"0px",
               textAlign:"center",
             padding:"5px",
@@ -51,7 +74,7 @@ class Card extends React.Component {
           </h1>
       }
       else if(type == 1){
-          return <div>
+          return <div key={this.guid()}>
             <h1 style={{
                 margin:"8px",
                 fontSize:"9pt"   ,fontWeight:"400" 
@@ -70,7 +93,7 @@ class Card extends React.Component {
           </div>
       }
       else if(type == 2 && payload["icon"] == true){
-          return <div style={{
+          return <div key={this.guid()} style={{
               width:"100%",textAlign:"center",
               paddingTop:"5px"
           }}>
@@ -80,7 +103,7 @@ class Card extends React.Component {
           </div>
       }
       else if(type == 2){
-          return <div style={{
+          return <div key={this.guid()} style={{
               width:"100%",textAlign:"center",
               marginBottom:"5px"
           }}>
@@ -90,7 +113,7 @@ class Card extends React.Component {
           </div>
       }
       else if(type == 3){
-          return <div style={{
+          return <div key={this.guid()} style={{
             marginTop:"5px",
             marginBottom:"5px",
             marginLeft:"5px",
@@ -108,7 +131,7 @@ class Card extends React.Component {
                 fontSize:"11pt",
                 background:"rgba(0,0,0,0.00)",fontWeight:"400",borderBottom:"1px solid rgba(0,0,0,0.025)"
             }}>
-                {payload["text"]}
+                {payload["name"]}
             </h1>
           </div>
       }
