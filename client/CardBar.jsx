@@ -8,10 +8,10 @@ class CardBar extends React.Component {
     };
     console.log(this.props.height);
     var heights = [];
-    for(var i = 0; i < this.props.height / 200;i++){
-      heights.push(<div style={{height:"200px",borderBottom:"1px solid lightgray"}}/>)
+    for(var i = 0; i < this.props.height / 250;i++){
+      heights.push(<div style={{height:"250px"}}><window.Card/></div>)
     }
-    let remainder = (this.props.height % 200);
+    let remainder = (this.props.height % 250);
     if(remainder > 0) heights.push(<div style={{height:remainder+"px"}}/>);
     this.props.loaded(this);
     return (
