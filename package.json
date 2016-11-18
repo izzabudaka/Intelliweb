@@ -26,6 +26,7 @@
     "node-wikipedia": "0.0.2",
     "node-wit": "^4.1.0",
     "request": "^2.78.0",
+    "rsvp": "^3.3.3",
     "textversionjs": "^1.0.2",
     "wikijs": "^1.1.1",
     "wikipedia-js": "0.0.6"
