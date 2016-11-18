@@ -35,26 +35,30 @@ this.get_plot = function(html, callback) {
 }
 
 this.plot_radar2 = function(html, callback){
-  var result = { datasets: [], labels: [] }
-  html = html.replace("<tr>","").replace("<table>", "").replace("/<table>", "")
-    .split("</tr>")
-  for(var i = 0; i < html.length; i++){
-    var current = html[i].replace("<td>", "").split("</td>")
-    if(i == 0){
-      current.slice(1,current.length).forEach(function(val){
-        result["datasets"].push({label: val.replace("<td>", ""), data: [] })
-      })
-    } else{
-      current[0] = current[0].replace("<tr>", "").trim()
-      result.labels.push(current[0])
-      for(var j = 1; j < current.length; j++){
-        result["datasets"][j-1]["data"].push(current[j].replace("<td>", "").trim())
+  try{
+    var result = { datasets: [], labels: [] }
+    html = html.replace("<tr>","").replace("<table>", "").replace("/<table>", "")
+      .split("</tr>")
+    for(var i = 0; i < html.length; i++){
+      var current = html[i].replace("<td>", "").split("</td>")
+      if(i == 0){
+        current.slice(1,current.length).forEach(function(val){
+          result["datasets"].push({label: val.replace("<td>", ""), data: [] })
+        })
+      } else{
+        current[0] = current[0].replace("<tr>", "").trim()
+        result.labels.push(current[0])
+        for(var j = 1; j < current.length; j++){
+          result["datasets"][j-1]["data"].push(current[j].replace("<td>", "").trim())
+        }
       }
     }
+    var card = Card();
+    card.addGraph(result);
+    callback(card)
+  } catch(e){
+    callback(Card())
   }
-  var card = Card();
-  card.addGraph(result);
-  callback(card)
 }
 
 this.plot_radar = function(html, callback){
