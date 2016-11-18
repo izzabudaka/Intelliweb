@@ -78,8 +78,7 @@ this.get_entity_cards = function(entities, callback){
 			cards.forEach(function(card){
 				var no_html = card[0].replace(/<(?:.|\n)*?>/gm, '')	;
 				var cardEle = Card();
-				cardEle.addTitle(card[1], '#fbfbfb');
-				cardEle.addSubtitle(no_html, '', '#fbfbfb');
+				cardEle.addSubtitle(no_html, card[1], '#fbfbfb');
 				cardEle.addImage(card[2]);
 				cardEle.addColor("#565656"); // some shade of red
 				result.push({ card: cardEle.elements });

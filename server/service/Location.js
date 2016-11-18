@@ -43,7 +43,12 @@ var get_geocode = function(location_txt, callback){
 	  "language":   "en",
 	}
 	gmAPI.geocode(geocodeParams, function(err, result){
-	  callback(result.results[0].geometry.location, result.results[0].geometry.bounds);
+      if(result.status != "ZERO_RESULTS"){
+        callback(result.results[0].geometry.location, result.results[0].geometry.bounds);
+      } else{
+        console.log("no matching locations found")
+        callback({ lat: 0, lng:0}, undefined)
+      }
 	});
 }
 
@@ -54,8 +59,9 @@ this.get_map_image = function(location_txt, callback){
 	};
 	get_geocode(location_txt, function(location, bounds){
 		params["center"] = location.lat + ","+location.lng
+        console.log(bounds)
         if(bounds == undefined || bounds == {}){
-            console.log("Unable to retrieve location information for " + location)
+            console.log("Unable to retrieve location information for " + JSON.stringify(location))
             callback("")
         }
         else{
