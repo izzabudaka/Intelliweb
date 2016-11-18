@@ -117,7 +117,7 @@ this.plot_radar2 = function(html, callback){
 
       card.addTitle("Graph: Figure 1");
       card.addGraph(result);
-      card.addColor("#FFE819");
+      card.addColor("#FFE456");
       callback(card)
     }
   } catch(e){
