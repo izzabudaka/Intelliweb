@@ -44,6 +44,7 @@ exports.Card = () => {
 
     return {
         toJson: toJson,
+        elements: elements,
         addTitle: addTitle,
         addSubtitle: addSubtitle,
         addImage: addImage,
