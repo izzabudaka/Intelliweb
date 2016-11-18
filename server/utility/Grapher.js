@@ -107,5 +107,6 @@ this.plot_radar = function(html, callback){
 
   var card = Card()
   card.addGraph(data)
+  card.addColor("#fffff");
   callback(card)
 }
