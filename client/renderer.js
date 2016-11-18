@@ -26,18 +26,20 @@ var allCards = [];
 webview.addEventListener('ipc-message', (event) => {
         if(event.channel === "get_links"){
             var requestLeft = event.args[0].length;
+            
             event.args[0].forEach(function(linkBundle){
                     request("http://127.0.0.1:3000/analyse_links?link=" + linkBundle.link, function(error, response, body){
                             if(!error && response.statusCode==200){
-                                requestLeft--;
                                 let json = JSON.parse(response.body);
+                                if(linkBundle.link.indexOf("amazon") != -1) console.log(json);
                                 let card = json["card"];
-                                if(card != undefined && card.filter((x)=>x == undefined).length == 0) {
+                                if(card != undefined && card.length > 0 && allCards.map(x=>x.filter(y=>y.type==0)[0].payload["text"]).indexOf(card.filter(x=>x.type==0)[0].payload["text"]) == -1) {
                                     allCards.push(card);
                                     let inner = React.createElement(window.CardBar, {
                                             height:pageHeight,
                                             loaded:function(v){sideBar = v},
                                             onURLClicked:(url)=>webview.src=url,
+                                            request:request,
                                             cards:allCards});
                                     ReactDOM.render(inner,document.getElementById("rail"));
                                 }    
@@ -58,18 +60,19 @@ webview.addEventListener('ipc-message', (event) => {
                     body:{text:linkBundle.paragraph}
                 }, function(err, response, body){
                     console.log("got paragraph data");
+                    if(response == undefined) return;
                     let json = response.body;
-                    console.log(response.body);
                     let cards = json["card"];
                     cards.forEach(card => {
                         card = card["card"];
                         let title = card.filter(x=>x.type == 0)[0]["text"];
-                        if(card != undefined && allCards.filter(x=>x.filter(y=>y.type == 0 && y.payload["text"] == title).length == 0)) {
+                        if(card != undefined && allCards.map(x=>x.filter(y=>y.type==0)[0].payload["text"]).indexOf(card.filter(x=>x.type==0)[0].payload["text"]) == -1) {
                             allCards.push(card);
                                 let inner = React.createElement(window.CardBar, {
                                     height:pageHeight,
                                     loaded:function(v){sideBar = v},
                                     onURLClicked:(url)=>webview.src=url,
+                                    request:request,
                                     cards:allCards});
                                 ReactDOM.render(inner,document.getElementById("rail"));
                         }
@@ -78,29 +81,31 @@ webview.addEventListener('ipc-message', (event) => {
                 });
             });
         }
+        
+        
 
         if(event.channel === "get_tables"){
             event.args[0].forEach(function(table){
+                console.log(table.html);
                 request({
-                    url:"http://127.0.0.1:3000/analyze_table",
+                    url:"http://127.0.0.1:3000/analyse_table",
                     method:"POST",
                     json:true,
                     body:{data:table.html}
                 }, function(err, response, body){
                     let json = response.body;
-                    let cards = json["card"];
-                    cards.forEach(card => {
-                        card = card["card"];
-                        if(card != undefined) {
-                            allCards.push(card);
-                                let inner = React.createElement(window.CardBar, {
-                                    height:pageHeight,
-                                    loaded:function(v){sideBar = v},
-                                    onURLClicked:(url)=>webview.src=url,
-                                    cards:allCards});
-                                ReactDOM.render(inner,document.getElementById("rail"));
-                        }
-                        });
+                    console.log(json);
+                    let card = json["card"];
+                    if(card != undefined && card.length > 0 ){//&& allCards.map(x=>x.filter(y=>y.type==0)[0].payload["text"]).indexOf(card.filter(x=>x.type==0)[0].payload["text"]) != -1) {
+                        allCards.push(card);
+                        let inner = React.createElement(window.CardBar, {
+                                height:pageHeight,
+                                loaded:function(v){sideBar = v},
+                                onURLClicked:(url)=>webview.src=url,
+                                request:request,
+                                cards:allCards});
+                        ReactDOM.render(inner,document.getElementById("rail"));
+                    }   
                     
                 });
             });
@@ -163,11 +168,11 @@ function openStash() {
     ReactDOM.render(React.createElement(window.Stash,{}),document.getElementById("stash"));
                     webview.style = "visibility:hidden;";
                     $("#stash").css("visibility","visible");
-}}),document.getElementById("navigator"));
+},shouldNavigateTo:function(url){webview.loadURL(url)}}),document.getElementById("navigator"));
 });
 
 webview.addEventListener("dom-ready",function(){
-    ReactDOM.render(React.createElement(window.Navigator,{title:webview.getTitle(),url:webview.getURL(),openStash:
+    ReactDOM.render(React.createElement(window.Navigator,{shouldNavigateTo:function(url){webview.loadURL(url)},title:webview.getTitle(),url:webview.getURL(),openStash:
     function openStash() {
         ReactDOM.render(React.createElement(window.Stash,{}),document.getElementById("stash"));
                     webview.style = "visibility:hidden;";

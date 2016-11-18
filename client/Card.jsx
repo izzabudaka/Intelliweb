@@ -1,3 +1,4 @@
+
 class Card extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +14,8 @@ class Card extends React.Component {
       overflowY:"scroll",
       display:"inline-block",
       position:"relative",
-      boxShadow:"0px 0px 33px 0px rgba(0,0,0,0.19)"
+      boxShadow:"0px 0px 33px 0px rgba(0,0,0,0.19)",
+      overflowX:"hidden"
     };
 
     for (var attrname in this.props.style) { rootStyle[attrname] = this.props.style[attrname]; }
@@ -27,18 +29,11 @@ class Card extends React.Component {
     //     {type:1,payload:{title:"Description",subtitle:"This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas"}},
     //     {type:3,payload:{text:"See repo", url:"http://github.com"}},
     //     {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
-    // ];
+    // ];xw
 
-      let colourElement = this.props.data.filter((element) => {
-        return element.type == 5;
-      });
-
-      if (colourElement) {
-          rootStyle.background = colourElement[0].payload.color;
-      }
 
     let elements = this.props.data.map(function(x) {
-        return Card.getElement(x.type,x.payload);
+        return Card.getElement(x.type,x.payload,this.props);
     }.bind(this));
     
 
@@ -52,6 +47,7 @@ class Card extends React.Component {
             }} onClick={this.stash.bind(this)}>
                 ☆
             </span>
+
       </div>
     );
   }
@@ -71,9 +67,24 @@ class Card extends React.Component {
         ((prevHash << 5) - prevHash) + currVal.charCodeAt(0), 0);
     }
 
+    componentDidUpdate(){
+        
+        if(this.props == undefined)return;
+        if(this.props.data.filter(x=>x.type==4)[0]==undefined)return;
+        if(document.getElementById("canvasx")==undefined)return;
+        console.log(document.getElementById("canvasx"));
+        let props = this.props;
+        setTimeout(function(){
+            var myChart = new Chart(document.getElementById("canvasx"), {
+            type: 'radar',
+            data: props.data.filter(x=>x.type==4)[0].payload["data"]
+        });
+        },5000)
+    }
+
   chartCanvas;
-  static getElement(type,payload){
-      let key = Card.hashCode(JSON.stringify(payload));
+  static getElement(type,payload,props){
+      let key = Math.random();
       if(type == 0){
           return <h1 key={key} style={{
               margin:"0px",
@@ -82,8 +93,8 @@ class Card extends React.Component {
             paddingTop:"8px",
             paddingBottom:"8px",
             fontSize:"11pt",
-            color: payload['colour'] || 'gray',
-            background:"rgba(0,0,0,0.00)",fontWeight:"400",borderBottom:"1px solid rgba(0,0,0,0.05)"
+            color: "#222" || 'gray',
+            background:"rgba(0,0,0,0.00)",fontWeight:"400",borderBottom:"1px solid rgba(0,0,0,0.05)",whiteSpace:"nowrap"
           }}>
             {payload["text"]}
           </h1>
@@ -92,9 +103,9 @@ class Card extends React.Component {
           return <div key={key}>
             <h1 style={{
                 margin:"8px",
-                color:payload['colour'] || 'gray',
+                marginTop:"14px",
+                color:"#222"  || 'gray',
                 fontSize:"12pt",
-                textDecoration: "underline"
             }}>
                 {payload["title"]}
             </h1>
@@ -102,7 +113,7 @@ class Card extends React.Component {
             <h2 style={{
                 margin:"8px",
                 fontSize:"11pt",
-                color:payload['colour'] || 'gray',
+                color:"#222"  || 'gray',
                 wordWrap:"break-word",
                 maxHeight: '150px',
                 overflow: 'hidden',
@@ -142,7 +153,7 @@ class Card extends React.Component {
             border:"1px solid rgba(0,0,0,0.05)",
             cursor:"pointer",
             backgroundColor: payload["background"] || "inherit"
-          }} onClick={() => this.onURLClicked(payload["url"])}>
+          }} onClick={() => props.onURLClicked(payload["url"])}>
                 <h1 style={{
                 margin:"0px",
                 textAlign:"center",
@@ -150,7 +161,7 @@ class Card extends React.Component {
                 paddingTop:"8px",
                 paddingBottom:"8px",
                 fontSize:"11pt",
-                color: payload['colour'] || 'inherit',
+                color: "#222"  || 'inherit',
                 background:"rgba(0,0,0,0.00)",fontWeight:"400",borderBottom:"1px solid rgba(0,0,0,0.025)"
             }}>
                 {payload["name"]}
@@ -159,13 +170,16 @@ class Card extends React.Component {
       }
       else if(type == 4){
           return <div>
-            <canvas ref={(x) => this.chartCanvas = x} width="240" height="240"/>
+                       <canvas id="canvasx" width="400" height="400"></canvas>
           </div>
       }
   }
 
-  componentDidMount(){
-      if(this.props.data.filter(x=>x.type==4).lenght>0) {
+  drawChart(){
+      console.log(this.props.data.filter(x=>x.type==4));
+      console.log(this.props.data.filter(x=>x.type==4).length > 0);
+      if(this.props.data.filter(x=>x.type==4).length>0) {
+          console.log(this.chartCanvas);
           if(this.chartCanvas == undefined) return;
           var myRadarChart = new Chart(this.chartCanvas.getDOMNode(), {
                 type: 'radar',
