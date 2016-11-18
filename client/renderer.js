@@ -25,7 +25,7 @@ webview.addEventListener('ipc-message', (event) => {
             //console.log(event.args[0]);
             var requestLeft = event.args[0].length;
             var request = require('request');
-            request('http://72dbcb84.ngrok.io/analyse_links?link=event.args[0]', function(error, response, body){
+            request("http://72dbcb84.ngrok.io/analyse_links?link="+event.args[0], function(error, response, body){
                 if(!error && response.statusCode==200){
                     console.log(body);
                     requestLeft--;
@@ -40,7 +40,7 @@ webview.addEventListener('ipc-message', (event) => {
             //console.log(event.args[0]);
             var requestLeft = event.args[0].length;
             var request = require('request');
-            request('http://72dbcb84.ngrok.io/analyse_text?link=event.args[0]', function(error, response, body){
+            request('http://72dbcb84.ngrok.io/analyse_text?link='+event.args[0], function(error, response, body){
                 if(!error && response.statusCode==200){
                     console.log(body);
                     requestLeft--;
@@ -52,7 +52,7 @@ webview.addEventListener('ipc-message', (event) => {
             });
         }
         if(event.channel === "get_images"){
-            console.log(event.args[0]);
+            console.log(event.args[0]);       
             var request = require('request');
             request('', function(error, response, body){
                 if(!error && response.statusCode==200){
@@ -64,7 +64,7 @@ webview.addEventListener('ipc-message', (event) => {
             //console.log(event.args[0]);
             var requestLeft = event.args[0].length;
             var request = require('request');
-            request('http://72dbcb84.ngrok.io/analyse_text?link=event.args[0]', function(error, response, body){
+            request('http://72dbcb84.ngrok.io/analyse_text?link='+event.args[0], function(error, response, body){
                 if(!error && response.statusCode==200){
                     console.log(body);
                     requestLeft--;
