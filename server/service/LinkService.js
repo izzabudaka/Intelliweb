@@ -1,4 +1,5 @@
-var github = require('./Github');
+var github = require('./Github'),
+    amazon = require('./Amazon');
 
 var services = [];
 
@@ -25,4 +26,8 @@ register(/github\.com\/([A-Za-z0-9]+)\/*(.*)/, (url, data) => {
     else {
         return github.getRepo(matches[1], matches[2]);
     }
+});
+
+register(/amazon.co.uk|amazon.com/, (url, data) => {
+    return amazon.getProduct(url);
 });

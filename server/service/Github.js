@@ -2,10 +2,12 @@ var GitHubApi = require('github'),
     fibrous = require('fibrous');
 
 var github = new GitHubApi();
-github.authenticate({
-    type: 'token',
-    token: process.env.GithubToken
-});
+if (process.env.GithubToken) {
+    github.authenticate({
+        type: 'token',
+        token: process.env.GithubToken
+    });
+}
 
 exports.getUser = username => _getUser.sync(username);
 exports.getRepo = (owner, repoName) => _getRepo.sync(owner, repoName);
