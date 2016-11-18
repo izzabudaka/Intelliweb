@@ -11,16 +11,18 @@ class Card extends React.Component {
       border:"1px solid rgba(0,0,0,0.05)",
       margin:"10px",
       background:"white",
-      overflowY:"scroll"
+      overflowY:"scroll",
+      display:"inline-block"
     };
 
     let cardData = [
-        {type:2,payload:{url:"https://assets-cdn.github.com/images/modules/open_graph/github-mark.png"}},
+        {type:2,payload:{url:"https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",icon:true}},
         {type:0,payload:{text:"Project X"}},
         {type:1,payload:{title:"Stars",subtitle:"585"}},
+        {type:1,payload:{title:"Forks",subtitle:"111"}},
         {type:1,payload:{title:"Description",subtitle:"This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas"}},
         {type:3,payload:{text:"See repo", url:"http://github.com"}},
-        {type:3,payload:{text:"Star this", url:"http://github.com"}},
+        {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
     ];
 
     let elements = cardData.map(function(x) {
@@ -67,13 +69,23 @@ class Card extends React.Component {
             </h2>
           </div>
       }
-      else if(type == 2){
+      else if(type == 2 && payload["icon"] == true){
           return <div style={{
               width:"100%",textAlign:"center",
               paddingTop:"5px"
           }}>
             <img style={{
                 maxHeight:"60px",maxWidth:"60px",display:"inline-block"
+            }} src={payload["url"]}/>
+          </div>
+      }
+      else if(type == 2){
+          return <div style={{
+              width:"100%",textAlign:"center",
+              marginBottom:"5px"
+          }}>
+            <img style={{
+                width:"180px",maxWidth:"180px",display:"inline-block"
             }} src={payload["url"]}/>
           </div>
       }
@@ -86,7 +98,7 @@ class Card extends React.Component {
             borderRadius:"5px",
             border:"1px solid rgba(0,0,0,0.05)",
             cursor:"pointer"
-          }}>
+          }} onClick={() => this.onURLClicked(payload["url"])}>
                 <h1 style={{
                 margin:"0px",
                 textAlign:"center",
@@ -100,6 +112,10 @@ class Card extends React.Component {
             </h1>
           </div>
       }
+  }
+
+  onURLClicked(url){
+      this.props.onURLClicked(url);
   }
 }
 
