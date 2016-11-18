@@ -37,7 +37,7 @@ register(/amazon.co.uk|amazon.com/, (url) => {
     return amazon.getProduct(url);
 });
 
-register(/medium.com\/@.*\/.+/, (url) => {
+register(/medium.com\/.*\/.+/, (url) => {
     return medium.getPost(url);
 });
 
