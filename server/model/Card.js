@@ -42,12 +42,22 @@ exports.Card = () => {
         })
     };
 
+    var addGraph = (data) => {
+        elements.push({
+            type: 4,
+            payload: {
+                data: data
+            }
+        })
+    };
+
     return {
         toJson: toJson,
         elements: elements,
         addTitle: addTitle,
         addSubtitle: addSubtitle,
         addImage: addImage,
-        addButton: addButton
+        addButton: addButton,
+        addGraph: addGraph
     };
 };

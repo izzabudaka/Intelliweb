@@ -2,6 +2,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     fibrous = require('fibrous'),
     entity_recognizer = require('./utility/EntityRecognizer'),
+    grapher = require('./utility/Grapher'),
     wikipedia_service = require('./service/Wikipedia');
     github = require('./service/Github'),
     amazon = require('./service/Amazon'),
@@ -42,6 +43,13 @@ app.get('/api/github/repo', (req, res) => {
     res.json({
         repo: gh
     });
+});
+
+app.post('/analyse_table', function(req, res) {
+	console.log(req.body.data);
+	grapher.get_plot(req.body.data, function(parsed){
+		res.send(parsed)
+	})
 });
 
 app.post('/analyse_txt', function(req, res) {
