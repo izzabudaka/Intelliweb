@@ -15,6 +15,7 @@ class CardStub extends React.Component {
       border:"1px solid rgba(0,0,0,0.05)",
       margin:"10px",
       background:"white",
+      cursor:"pointer",
       display:"inline-block",transition:"opacity 1.5s, transform 1.5s",opacity:this.state.loaded ? 1:0,transform:this.state.loaded ? "" : "scale(0.5)"
     };
     let title = this.props.data.filter(x=>x.type == 0)[0].payload["text"];
@@ -41,7 +42,10 @@ class CardStub extends React.Component {
           </h1>
 
           {card}
-
+          <i style={{
+            position:"absolute",
+            lineHeight:"50px",verticalAlign:"center"
+          }} className="fa fa-eye"/>
       </div>
     );
   }

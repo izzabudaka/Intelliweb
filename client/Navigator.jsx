@@ -4,7 +4,7 @@ class Navigator extends React.Component {
   }
   render() {
     let rootStyle ={
-      position:"relative",width:"100%",height:"100%",background:"#303030",color:"white"
+      position:"relative",width:"100%",height:"100%",background:"#d33400",color:"white"
     };
     let inputHolderStyle = {
         position:"absolute",
@@ -16,7 +16,8 @@ class Navigator extends React.Component {
         height:"100%",
         background:"rgba(255,255,255,0.05)",
         border:"0px solid rgba(255,255,255,0.08)",
-        paddingRight:"0px",borderRadius:"0px",paddingLeft:"5px",color:"white"
+        paddingRight:"0px",borderRadius:"0px",paddingLeft:"5px",color:"white",
+        fontSize:"11pt"
     };
 
     console.log("rendering:" + this.props.url);
@@ -32,7 +33,7 @@ class Navigator extends React.Component {
       {this.props.title}
       </h1>
       <div style={{height:"40px",position:"absolute",left:0,right:0,bottom:0}}>
-        <div style={inputHolderStyle}><input style={inputStyle} defaultValue={this.props.url}/></div>
+        <div style={inputHolderStyle}><input onKeyPress={this.keyPressed.bind(this)} style={inputStyle} defaultValue={this.props.url}/></div>
         
         <span style={{
                 display:"inline-block",
@@ -74,6 +75,10 @@ class Navigator extends React.Component {
     );
   }
 
+  keyPressed(e){
+      this.props.shouldNavigateTo(e.target.value);
+  }
+  
   openStash(){
       this.props.openStash();
   }

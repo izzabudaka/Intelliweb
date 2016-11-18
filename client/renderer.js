@@ -63,7 +63,8 @@ webview.addEventListener('ipc-message', (event) => {
                     let cards = json["card"];
                     cards.forEach(card => {
                         card = card["card"];
-                        if(card != undefined) {
+                        let title = card.filter(x=>x.type == 0)[0]["text"];
+                        if(card != undefined && allCards.filter(x=>x.filter(y=>y.type == 0 && y.payload["text"] == title).length == 0)) {
                             allCards.push(card);
                                 let inner = React.createElement(window.CardBar, {
                                     height:pageHeight,
