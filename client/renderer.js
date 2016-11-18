@@ -22,3 +22,11 @@ console.log(JSON.parse(JSON.stringify(webview)));
     webview.openDevTools();
     // webview.executeJavaScript(scrollCode,false,function(){console.log("code OK")});
 });
+
+
+$(document).ready(function(){
+    var ReactDOM = require("react-dom");
+    var React = require("react");
+
+    ReactDOM.render(React.createElement(window.CardBar, null),document.getElementById("rail"));
+});
