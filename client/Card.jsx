@@ -30,7 +30,6 @@ class Card extends React.Component {
         return element.type == 5;
       });
 
-      console.log('HELLO');
       if (colourElement) {
           rootStyle.background = colourElement[0].payload.color;
       }
