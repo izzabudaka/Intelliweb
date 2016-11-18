@@ -28,8 +28,9 @@ this.get_plot = function(html, callback) {
   	}
   	result[title] = values
   });
-  var card = Card()
-  card.addGraph(result)
+  var card = Card();
+  card.addGraph(result);
+  card.addColor('#ffcc00');
   callback(card)
 }
 
