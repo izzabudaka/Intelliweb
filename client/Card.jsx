@@ -82,6 +82,7 @@ class Card extends React.Component {
             paddingTop:"8px",
             paddingBottom:"8px",
             fontSize:"11pt",
+            color: payload['colour'] || 'gray',
             background:"rgba(0,0,0,0.00)",fontWeight:"400",borderBottom:"1px solid rgba(0,0,0,0.05)"
           }}>
             {payload["text"]}
@@ -91,7 +92,9 @@ class Card extends React.Component {
           return <div key={key}>
             <h1 style={{
                 margin:"8px",
-                fontSize:"12pt" 
+                color:payload['colour'] || 'gray',
+                fontSize:"12pt",
+                textDecoration: "underline"
             }}>
                 {payload["title"]}
             </h1>
@@ -99,8 +102,11 @@ class Card extends React.Component {
             <h2 style={{
                 margin:"8px",
                 fontSize:"11pt",
-                color:'gray',
-                wordWrap:"break-word"
+                color:payload['colour'] || 'gray',
+                wordWrap:"break-word",
+                maxHeight: '150px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
             }}>
                 {payload["subtitle"]}
             </h2>
@@ -122,7 +128,7 @@ class Card extends React.Component {
               marginBottom:"5px"
           }}>
             <img style={{
-                width:"180px",maxWidth:"180px",display:"inline-block"
+                width:"240px",maxWidth:"240px",display:"inline-block"
             }} src={payload["url"]}/>
           </div>
       }
@@ -134,7 +140,8 @@ class Card extends React.Component {
             marginRight:"5px",
             borderRadius:"5px",
             border:"1px solid rgba(0,0,0,0.05)",
-            cursor:"pointer"
+            cursor:"pointer",
+            backgroundColor: payload["background"] || "inherit"
           }} onClick={() => this.onURLClicked(payload["url"])}>
                 <h1 style={{
                 margin:"0px",
@@ -143,6 +150,7 @@ class Card extends React.Component {
                 paddingTop:"8px",
                 paddingBottom:"8px",
                 fontSize:"11pt",
+                color: payload['colour'] || 'inherit',
                 background:"rgba(0,0,0,0.00)",fontWeight:"400",borderBottom:"1px solid rgba(0,0,0,0.025)"
             }}>
                 {payload["name"]}
