@@ -1,7 +1,8 @@
 var github = require('./Github'),
     amazon = require('./Amazon'),
     medium = require('./Medium'),
-    stackOverflow = require('./StackOverflow');
+    stackOverflow = require('./StackOverflow'),
+    twitter = require('./Twitter');
 
 var services = [];
 
@@ -40,4 +41,15 @@ register(/medium.com\/@.*\/.+/, (url) => {
 
 register(/stackoverflow.com\/questions\/\d+/, (url) => {
     return stackOverflow.getAnswer(url);
+});
+
+register(/twitter.com\/(.+)/, (url) => {
+    var matches = url.match(/twitter.com\/(.+)/);
+    var path = matches[1];
+    
+    if ((path.match(/\//g) || []).length >= 2) {
+        return twitter.getTweet(url);
+    } else {
+        return twitter.getUser(url);
+    }
 });
