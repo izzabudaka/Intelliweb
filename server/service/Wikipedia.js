@@ -1,4 +1,5 @@
 var wikipedia = require("wikipedia-js");
+var modler = require("../model/Modeler");
 
 var async = require('async');
 
@@ -9,7 +10,7 @@ var get_person_card = function(title, callback){
 	      console.log("An error occurred[query=%s, error=%s]", query, err);
 	      return;
 	    }
-    	callback(wiki_text)
+    	callback(wiki_text, title)
     })
 }
 
@@ -20,7 +21,7 @@ var get_location_card = function(title, callback){
 	      console.log("An error occurred[query=%s, error=%s]", query, err);
 	      return;
 	    }
-    	callback(wiki_text)
+    	callback(wiki_text, title)
     })
 }
 
@@ -32,7 +33,7 @@ var get_organization_card = function(title, callback){
 	      console.log("An error occurred[query=%s, error=%s]", query, err);
 	      return;
 	    }
-    	callback(wiki_text)
+    	callback(wiki_text, title)
     })
 }
 
@@ -46,8 +47,9 @@ this.get_entity_cards = function(entities, callback){
 		size += entities[key].length
 	})
 
-	var addToResult = function(card){
-		result.push(card.replace(/<(?:.|\n)*?>/gm, ''))
+	var addToResult = function(card, title){
+		var no_html = card.replace(/<(?:.|\n)*?>/gm, '')
+		result.push(modler.get_title_sub(card, title))
 		last_processed = processed
 		processed++
 		if(processed == size)
