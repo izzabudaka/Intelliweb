@@ -108,14 +108,18 @@ this.plot_radar2 = function(html, callback){
         }
       }
     }
-    clean(result)
+    if(result.labels.indexOf("Python") == -1){
+      callback(Card())
+    } else{
+      clean(result)
+      var card = Card();
+      set_color(result["datasets"])
 
-    var card = Card();
-    set_color(result["datasets"])
-    card.addTitle("Graph: Figure 1");
-    card.addGraph(result);
-    card.addColor("#FFE819");
-    callback(card)
+      card.addTitle("Graph: Figure 1");
+      card.addGraph(result);
+      card.addColor("#FFE819");
+      callback(card)
+    }
   } catch(e){
     console.log(e)
     callback(Card())
