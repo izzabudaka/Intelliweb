@@ -28,7 +28,7 @@ this.get_plot = function(html, callback) {
   	}
   	result[title] = values
   });
-  var card = new Card()
+  var card = Card()
   card.addGraph(result)
   callback(card)
 }
