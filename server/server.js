@@ -2,6 +2,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     fibrous = require('fibrous'),
     github = require('./service/Github'),
+    amazon = require('./service/Amazon'),
     linkService = require('./service/LinkService');
 
 var port = process.env.PORT || 3000;
@@ -17,6 +18,13 @@ app.get('/api/test', (req, res) => {
     var lol = linkService.runService(req.query.link, '{}');
     res.json({
         gh: lol
+    });
+});
+
+app.get('/api/amazon', (req, res) => {
+    amazon.amazon();
+    res.json({
+        gh: 'lol'
     });
 });
 
