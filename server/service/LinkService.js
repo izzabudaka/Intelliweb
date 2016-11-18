@@ -1,6 +1,7 @@
 var github = require('./Github'),
     amazon = require('./Amazon'),
-    medium = require('./Medium');
+    medium = require('./Medium'),
+    stackOverflow = require('./StackOverflow');
 
 var services = [];
 
@@ -35,4 +36,8 @@ register(/amazon.co.uk|amazon.com/, (url) => {
 
 register(/medium.com\/@.*\/.+/, (url) => {
     return medium.getPost(url);
+});
+
+register(/stackoverflow.com\/questions\/\d+/, (url) => {
+    return stackOverflow.getAnswer(url);
 });
