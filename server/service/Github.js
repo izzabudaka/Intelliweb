@@ -1,5 +1,6 @@
 var GitHubApi = require('github'),
     fibrous = require('fibrous');
+
 var github = new GitHubApi();
 github.authenticate({
     type: 'token',
