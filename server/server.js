@@ -27,7 +27,7 @@ app.post('/analyse_table', function(req, res) {
 	console.log(req.body.data);
 	grapher.get_plot(req.body.data, function(parsed){
 		res.json({
-			card: parsed.toJson()
+			card: parsed.elements
 		})
 	})
 });

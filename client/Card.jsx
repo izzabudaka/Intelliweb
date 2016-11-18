@@ -29,6 +29,14 @@ class Card extends React.Component {
     //     {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
     // ];
 
+      let colourElement = this.props.data.filter((element) => {
+        return element.type == 5;
+      });
+
+      if (colourElement) {
+          rootStyle.background = colourElement[0].payload.color;
+      }
+
     let elements = this.props.data.map(function(x) {
         return Card.getElement(x.type,x.payload);
     }.bind(this));
