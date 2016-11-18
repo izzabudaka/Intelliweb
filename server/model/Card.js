@@ -5,21 +5,23 @@ exports.Card = () => {
         return JSON.stringify(elements);
     };
 
-    var addTitle = (title) => {
+    var addTitle = (title,colour) => {
         elements.push({
             type: 0,
             payload: {
-                text: title
+                text: title,
+                colour: colour
             }
         })
     };
 
-    var addSubtitle = (subtitle, title) => {
+    var addSubtitle = (subtitle, title, colour) => {
         elements.push({
             type: 1,
             payload: {
                 title: title,
-                subtitle: subtitle
+                subtitle: subtitle,
+                colour: colour
             }
         })
     };
@@ -33,12 +35,14 @@ exports.Card = () => {
         })
     };
 
-    var addButton = (url, name) => {
+    var addButton = (url, name, background, colour) => {
         elements.push({
             type: 3,
             payload: {
                 url: url,
-                name: name
+                name: name,
+                background: background,
+                colour: colour
             }
         })
     };

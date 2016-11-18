@@ -18,10 +18,10 @@ var _getUser = (username, callback) => {
         username: username
     }, function(err, res) {
         var card = Card();
-        card.addTitle(res.name);
-        card.addSubtitle(res.login);
+        card.addTitle(res.name, '#fbfbfb');
+        card.addSubtitle(res.login, 'Username', '#fbfbfb');
         card.addImage(res.avatar_url);
-        card.addButton(res.html_url, 'View Profile');
+        card.addButton(res.html_url, 'View Profile', '#fbfbfb', '#222');
         card.addColor("#208bc9");
         callback(null, card.elements);
     });
@@ -35,14 +35,14 @@ var _getRepo = (owner, repoName, callback) => {
         if (err) console.log(err);
 
         var card = Card();
-        card.addTitle(res.name);
-        card.addSubtitle(res.owner.login);
-        card.addSubtitle(res.owner.description);
-        card.addSubtitle(res.stargazers_count, 'Stars');
-        card.addSubtitle(res.watchers_count, 'Watchers');
-        card.addSubtitle(res.forks, 'Forks');
-        card.addButton(res.html_url, 'View Repo');
-        card.addColor("#CFD8DC"); // some off-white here
+        card.addTitle(res.name, '#fbfbfb');
+        card.addSubtitle(res.owner.login, 'Username', '#fbfbfb');
+        card.addSubtitle(res.owner.description, 'Description', '#fbfbfb');
+        card.addSubtitle(res.stargazers_count, 'Stars', '#fbfbfb');
+        card.addSubtitle(res.watchers_count, 'Watchers', '#fbfbfb');
+        card.addSubtitle(res.forks, 'Forks', '#fbfbfb');
+        card.addButton(res.html_url, 'View Repo', '#fbfbfb', '#222');
+        card.addColor("#208bc9");
         callback(null, card.elements);
     });
 };
