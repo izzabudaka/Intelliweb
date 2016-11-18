@@ -1,4 +1,5 @@
 var cheerio = require("cheerio");
+var Card = require('../model/Card').Card;
 
 var reverse_factorial = function(n){
 	if (n == 0 || n == 1){
@@ -27,5 +28,7 @@ this.get_plot = function(html, callback) {
   	}
   	result[title] = values
   });
-  callback(result)
+  var card = new Card()
+  card.addGraph(result)
+  callback(card)
 }
