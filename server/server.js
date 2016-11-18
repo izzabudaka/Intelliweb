@@ -25,7 +25,7 @@ app.get('/analyse_links', (req, res) => {
 
 app.post('/analyse_table', function(req, res) {
 	console.log(req.body.data);
-	grapher.get_plot(req.body.data, function(parsed){
+	grapher.plot_radar2(req.body.data, function(parsed){
 		res.json({
 			card: parsed.elements
 		})

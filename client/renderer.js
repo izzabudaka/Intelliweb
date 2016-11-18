@@ -138,6 +138,15 @@ webview.addEventListener('ipc-message', (event) => {
                 sideBar.updateScrollPosition(event.args[0]);
             }
         }
+
+        function getCards(){
+            //if(stash.getAll()!= undefined)
+           Object.keys(localStorage).forEach(key=>console.log(localStorage[key]));
+        }
+
+        function saveCard(data){
+            localStorage.setItem(data.type, JSON.stringify(data.payload));
+        }
     });
     // webview.openDevTools();
     // webview.executeJavaScript(scrollCode,false,function(){console.log("code OK")});
