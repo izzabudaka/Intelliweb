@@ -94,7 +94,8 @@
 	                margin: "10px",
 	                background: "white",
 	                overflowY: "scroll",
-	                display: "inline-block"
+	                display: "inline-block",
+	                position: "relative"
 	            };
 
 	            // let cardData = [
@@ -107,7 +108,6 @@
 	            //     {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
 	            // ];
 
-	            console.log(this.props.data);
 	            var elements = this.props.data.map(function (x) {
 	                console.log(x);
 	                return this.getElement(x.type, x.payload);
@@ -120,11 +120,26 @@
 	                React.createElement(
 	                    "span",
 	                    { style: {
-	                            display: "inline-block"
-	                        } },
+	                            display: "inline-block",
+	                            position: "absolute",
+	                            top: "5px", right: "0px", width: "30px", height: "30px", textAlign: "center", cursor: "pointer"
+	                        }, onClick: this.stash.bind(this) },
 	                    "\u2606"
 	                )
 	            );
+	        }
+	    }, {
+	        key: "stash",
+	        value: function stash(e) {
+	            e.target.remove();
+	        }
+	    }, {
+	        key: "guid",
+	        value: function guid() {
+	            function s4() {
+	                return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+	            }
+	            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 	        }
 	    }, {
 	        key: "getElement",
@@ -134,7 +149,7 @@
 	            if (type == 0) {
 	                return React.createElement(
 	                    "h1",
-	                    { style: {
+	                    { key: this.guid(), style: {
 	                            margin: "0px",
 	                            textAlign: "center",
 	                            padding: "5px",
@@ -148,7 +163,7 @@
 	            } else if (type == 1) {
 	                return React.createElement(
 	                    "div",
-	                    null,
+	                    { key: this.guid() },
 	                    React.createElement(
 	                        "h1",
 	                        { style: {
@@ -171,7 +186,7 @@
 	            } else if (type == 2 && payload["icon"] == true) {
 	                return React.createElement(
 	                    "div",
-	                    { style: {
+	                    { key: this.guid(), style: {
 	                            width: "100%", textAlign: "center",
 	                            paddingTop: "5px"
 	                        } },
@@ -182,7 +197,7 @@
 	            } else if (type == 2) {
 	                return React.createElement(
 	                    "div",
-	                    { style: {
+	                    { key: this.guid(), style: {
 	                            width: "100%", textAlign: "center",
 	                            marginBottom: "5px"
 	                        } },
@@ -193,7 +208,7 @@
 	            } else if (type == 3) {
 	                return React.createElement(
 	                    "div",
-	                    { style: {
+	                    { key: this.guid(), style: {
 	                            marginTop: "5px",
 	                            marginBottom: "5px",
 	                            marginLeft: "5px",
@@ -347,7 +362,7 @@
 	          { style: { width: "100%", overflow: "scroll" } },
 	          React.createElement(
 	            "div",
-	            { style: { height: "250px", width: "750px" } },
+	            { style: { height: "250px", width: "1500px" } },
 	            cards
 	          )
 	        ));
