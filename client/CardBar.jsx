@@ -9,7 +9,11 @@ class CardBar extends React.Component {
     console.log(this.props.height);
     var heights = [];
     for(var i = 0; i < this.props.height / 250;i++){
-      heights.push(<div style={{height:"250px"}}><window.Card/></div>)
+      heights.push(<div style={{width:"100%",overflow:"scroll"}}><div style={{height:"250px",width:"750px"}}>
+        <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+        <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+        <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+      </div></div>)
     }
     let remainder = (this.props.height % 250);
     if(remainder > 0) heights.push(<div style={{height:remainder+"px"}}/>);

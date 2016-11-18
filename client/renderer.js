@@ -77,7 +77,7 @@ webview.addEventListener('ipc-message', (event) => {
             });
         }
         if(event.channel === "page_height"){
-            let inner = React.createElement(window.CardBar, {height:event.args[0],loaded:function(v){sideBar = v}});
+            let inner = React.createElement(window.CardBar, {height:event.args[0],loaded:function(v){sideBar = v},onURLClicked:(url)=>webview.src=url});
             ReactDOM.render(inner,document.getElementById("rail"));
         }
         if(event.channel === "scrolling"){
@@ -88,9 +88,16 @@ webview.addEventListener('ipc-message', (event) => {
     });
     // webview.openDevTools();
     // webview.executeJavaScript(scrollCode,false,function(){console.log("code OK")});
+
+
+webview.addEventListener("will-navigate",function(url){
+    console.log(url.url);
+    ReactDOM.render(React.createElement(window.Navigator,{url:url.url}),document.getElementById("navigator"));
 });
 
 
+});
+
 $(document).ready(function(){
-                
+        ReactDOM.render(React.createElement(window.Navigator,{url:webview.src}),document.getElementById("navigator"));      
 });

@@ -23,3 +23,7 @@ h1,h2{
     font-family:Helvetica;
     font-weight:200;
 }
+
+textarea:focus, input:focus{
+    outline: none;
+}
