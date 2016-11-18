@@ -114,7 +114,7 @@ this.plot_radar2 = function(html, callback){
     set_color(result["datasets"])
     card.addTitle("Graph: Figure 1");
     card.addGraph(result);
-    card.addColor("#ffffff");
+    card.addColor("#FFE819");
     callback(card)
   } catch(e){
     console.log(e)
