@@ -55,7 +55,7 @@ this.get_map_image = function(location_txt, callback){
 	get_geocode(location_txt, function(location, bounds){
 		params["center"] = location.lat + ","+location.lng
         if(bounds == undefined || bounds == {}){
-            console.log(err)
+            console.log("Unable to retrieve location information for " + location)
             callback("")
         }
         else{
