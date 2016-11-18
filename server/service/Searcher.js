@@ -19,6 +19,8 @@ this.search = function(query, cards, callback){
       async.forEach(cards, function(card){
         if(card[attribute] > condition)
           result.push(card)
+      }).then(function(){
+        return result
       })
     }
   })

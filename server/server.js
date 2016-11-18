@@ -3,7 +3,8 @@ var express = require('express'),
     fibrous = require('fibrous'),
     entity_recognizer = require('./utility/EntityRecognizer'),
     grapher = require('./utility/Grapher'),
-    wikipedia_service = require('./service/Wikipedia');
+    wikipedia_service = require('./service/Wikipedia'),
+    searcher = require("./service/Searcher")
     linkService = require('./service/LinkService');
 
 var port = process.env.PORT || 3000;
@@ -34,7 +35,9 @@ app.post('/analyse_table', function(req, res) {
 app.post('/search', function(req, res) {
 	var cards = req.body.cards;
 	var query = req.body.query;
-
+	searcher.search(query, cards, function(cards){
+		res.json({card : cards})
+	})
 });
 
 app.post('/analyse_txt', function(req, res) {
