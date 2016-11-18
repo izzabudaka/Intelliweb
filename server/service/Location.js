@@ -54,8 +54,10 @@ this.get_map_image = function(location_txt, callback){
 	};
 	get_geocode(location_txt, function(location, bounds){
 		params["center"] = location.lat + ","+location.lng
-        if(bounds == undefined || bounds == {})
+        if(bounds == undefined || bounds == {}){
+            console.log(err)
             callback("")
+        }
         else{
             params["zoom"] = getBoundsZoomLevel(bounds, {height: 500, width: 400})
             callback(gmAPI.staticMap(params))

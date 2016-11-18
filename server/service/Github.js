@@ -38,6 +38,7 @@ var _getRepo = (owner, repoName, callback) => {
         repo: repoName
     }, (err, res) => {
         if (err) {
+            console.log(err)
             callback(null, []);
             return;
         }

@@ -31,6 +31,7 @@ function _getAnswer(url, callback) {
             callback(null, card.elements);
         }
         catch (e) {
+            console.log(e)
             callback(null, []);
         }
     });
