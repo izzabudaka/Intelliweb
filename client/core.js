@@ -1,14 +1,9 @@
-let webview  = document.getElementById("foo");
+let webview  = document.getElementById("webview");
 webview.addEventListener('did-start-loading', function() {
     console.log(webview);
-    webview.executeJavaScript("(function() {var coll = document.getElementsByTagName('a')"+
-								"var list = Array.prototype.slice.call(coll,0)"+
+    webview.executeJavaScript("(function() { var list = Array.prototype.slice.call(document.getElementsByTagName('a'),0); "+
 
-									"function isLink(reference){"+
-										"return reference.href.length != 0"+
-									"}"+
-
-"list.filter(isLink)})()", false, function(x) {console.log(x);});
+							" return list.filter(function(reference){ return reference.href.length!=0;}).map(function(reference){return reference.href;});})()", false, function(x) {console.log(x);});
 });
 
 $(document).load(function(){

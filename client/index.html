@@ -4,17 +4,13 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
-    
+    <link rel="stylesheet" type="text/css" href="core.css" media="screen" />
   </head>
-  <style>
-    #foo {
-      position: fixed;
-      top:0;left:0;right:100px;bottom:0;
-    }
-  </style>
-  <body onload="browser_loaded">
-    <webview id="foo" src="http://www.reddit.com/" ></webview>
-    <script src="core.js"></script>
+  <body>
+    <div id="navigator"></div>
+    <!--<div id="rail"></div>-->
+    <webview id="webview" src="http://www.reddit.com/" preload="./bridge.js"></webview>
+    <!--<script src="core.js"></script>-->
   </body>
 
   <script>
