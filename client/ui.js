@@ -50,15 +50,15 @@
 
 	var _Card2 = _interopRequireDefault(_Card);
 
-	var _Stash = __webpack_require__(13);
+	var _Stash = __webpack_require__(2);
 
 	var _Stash2 = _interopRequireDefault(_Stash);
 
-	var _Navigator = __webpack_require__(2);
+	var _Navigator = __webpack_require__(3);
 
 	var _Navigator2 = _interopRequireDefault(_Navigator);
 
-	var _CardBar = __webpack_require__(3);
+	var _CardBar = __webpack_require__(4);
 
 	var _CardBar2 = _interopRequireDefault(_CardBar);
 
@@ -111,6 +111,15 @@
 	            //     {type:3,payload:{text:"See repo", url:"http://github.com"}},
 	            //     {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
 	            // ];
+
+	            var colourElement = this.props.data.filter(function (element) {
+	                return element.type == 5;
+	            });
+
+	            console.log('HELLO');
+	            if (colourElement) {
+	                rootStyle.background = colourElement[0].payload.color;
+	            }
 
 	            var elements = this.props.data.map(function (x) {
 	                return Card.getElement(x.type, x.payload);
@@ -270,6 +279,49 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var Stash = function (_React$Component) {
+	  _inherits(Stash, _React$Component);
+
+	  function Stash(props) {
+	    _classCallCheck(this, Stash);
+
+	    return _possibleConstructorReturn(this, (Stash.__proto__ || Object.getPrototypeOf(Stash)).call(this, props));
+	  }
+
+	  _createClass(Stash, [{
+	    key: "render",
+	    value: function render() {
+	      var rootStyle = {};
+	      var items = window.stashed_items.map(function (item) {
+	        return React.createElement(window.Card, { data: item });
+	      });
+	      return React.createElement(
+	        "div",
+	        { style: rootStyle },
+	        items
+	      );
+	    }
+	  }]);
+
+	  return Stash;
+	}(React.Component);
+
+	window.Stash = Stash;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	var Navigator = function (_React$Component) {
 	  _inherits(Navigator, _React$Component);
 
@@ -330,7 +382,7 @@
 	window.Navigator = Navigator;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -417,58 +469,6 @@
 	}(React.Component);
 
 	window.CardBar = CardBar;
-
-/***/ },
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Stash = function (_React$Component) {
-	  _inherits(Stash, _React$Component);
-
-	  function Stash(props) {
-	    _classCallCheck(this, Stash);
-
-	    return _possibleConstructorReturn(this, (Stash.__proto__ || Object.getPrototypeOf(Stash)).call(this, props));
-	  }
-
-	  _createClass(Stash, [{
-	    key: "render",
-	    value: function render() {
-	      var rootStyle = {};
-	      var items = window.stashed_items.map(function (item) {
-	        return React.createElement(window.Card, { data: item });
-	      });
-	      return React.createElement(
-	        "div",
-	        { style: rootStyle },
-	        items
-	      );
-	    }
-	  }]);
-
-	  return Stash;
-	}(React.Component);
-
-	window.Stash = Stash;
 
 /***/ }
 /******/ ]);
