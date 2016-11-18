@@ -25,6 +25,7 @@ function _getProduct(url, callback) {
             card.addSubtitle(price);
             card.addImage(image);
             card.addButton(url, 'View product');
+            card.addColor("#eb8c11");
 
             callback(null, card.elements);
         }
