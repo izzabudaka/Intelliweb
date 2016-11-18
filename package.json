@@ -17,6 +17,8 @@
     "node-ner": "0.0.3",
     "node-wikipedia": "0.0.2",
     "wikijs": "^1.1.1",
-    "wikipedia-js": "0.0.6"
+    "wikipedia-js": "0.0.6",
+    "github": "^6.0.4",
+    "node-ner": "0.0.3"
   }
 }

@@ -3,6 +3,8 @@ var express = require('express'),
     fibrous = require('fibrous'),
     entity_recognizer = require('./utility/EntityRecognizer'),
     wikipedia_service = require('./service/Wikipedia');
+    github = require('./service/Github'),
+    linkService = require('./service/LinkService');
 
 var port = process.env.PORT || 3000;
 
@@ -13,9 +15,25 @@ app.use(bodyParser.json());
 
 app.use(fibrous.middleware);
 
+app.get('/api/test', (req, res) => {
+    var lol = linkService.runService(req.query.link, '{}');
+    res.json({
+        gh: lol
+    });
+});
 
-app.post('/api', function(req, res) {
-    console.log(req.body);
+app.get('/api/github/person', (req, res) => {
+    var gh = github.getUser('Gilbert09');
+    res.json({
+        gh: gh
+    });
+});
+
+app.get('/api/github/repo', (req, res) => {
+    var gh = github.getRepo('goodeggs', 'fibrous');
+    res.json({
+        repo: gh
+    });
 });
 
 app.post('/analyse_txt', function(req, res) {
