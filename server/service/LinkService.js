@@ -1,5 +1,6 @@
 var github = require('./Github'),
-    amazon = require('./Amazon');
+    amazon = require('./Amazon'),
+    medium = require('./Medium');
 
 var services = [];
 
@@ -30,4 +31,8 @@ register(/github\.com\/([A-Za-z0-9]+)\/*(.*)/, (url) => {
 
 register(/amazon.co.uk|amazon.com/, (url) => {
     return amazon.getProduct(url);
+});
+
+register(/medium.com\/@.*\/.+/, (url) => {
+    return medium.getPost(url);
 });
