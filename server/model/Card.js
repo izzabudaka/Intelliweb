@@ -26,11 +26,21 @@ exports.Card = () => {
         })
     };
 
-    var addImage= (url) => {
+    var addImage = (url) => {
         elements.push({
             type: 2,
             payload: {
                 url: url
+            }
+        })
+    };
+
+    var addIcon = (url) => {
+        elements.push({
+            type: 2,
+            payload: {
+                url: url,
+                icon: true
             }
         })
     };
@@ -72,6 +82,7 @@ exports.Card = () => {
         addTitle: addTitle,
         addSubtitle: addSubtitle,
         addImage: addImage,
+        addIcon: addIcon,
         addButton: addButton,
         addGraph: addGraph
     };

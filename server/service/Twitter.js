@@ -11,17 +11,22 @@ function _getUser(url, callback) {
     request(url, (error, response, body) => {
         var doc =  dom.jsdom(body);
 
-        var title = doc.querySelector('h1 a').innerHTML.trim();
-        var subTitle = doc.querySelector('.ProfileHeaderCard-bio').innerHTML;
-        var image = doc.querySelector('.ProfileAvatar-image ').src;
+        try {
+            var title = doc.querySelector('h1 a').innerHTML.trim();
+            var subTitle = doc.querySelector('.ProfileHeaderCard-bio').innerHTML;
+            var image = doc.querySelector('.ProfileAvatar-image ').src;
 
-        var card = Card();
-        card.addTitle(title);
-        card.addSubtitle(subTitle);
-        card.addImage(image);
-        card.addButton(url, 'View profile');
+            var card = Card();
+            card.addTitle(title);
+            card.addSubtitle(subTitle);
+            card.addImage(image);
+            card.addButton(url, 'View profile');
 
-        callback(null, card.elements);
+            callback(null, card.elements);
+        }
+        catch (e) {
+            callback(null, []);
+        }
     });
 }
 
