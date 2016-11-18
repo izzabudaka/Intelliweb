@@ -14,10 +14,11 @@ exports.Card = () => {
         })
     };
 
-    var addSubtitle = (subtitle) => {
+    var addSubtitle = (subtitle, title) => {
         elements.push({
             type: 1,
             payload: {
+                title: title,
                 subtitle: subtitle
             }
         })
