@@ -17,7 +17,7 @@ window.onload = function() {
 
       ipcRenderer.sendToHost("page_height",window.outerHeight);
       ipcRenderer.sendToHost('get_links', list_link);
-      console.log(list_link);
+      //console.log(list_link);
 
       var list_paragraph = Array.prototype.slice.call(document.getElementsByTagName('p'),0);
 
@@ -29,7 +29,7 @@ window.onload = function() {
             };
       });
       ipcRenderer.sendToHost('get_paragraphs', list_paragraph);
-      console.log(list_paragraph);
+      //console.log(list_paragraph);
 
       var list_image = Array.prototype.slice.call(document.getElementsByTagName('img'),0);
 
@@ -41,7 +41,7 @@ window.onload = function() {
             };
       });
       ipcRenderer.sendToHost('get_images', list_image);
-      console.log(list_image);
+      //console.log(list_image);
 
       var list_title = Array.prototype.slice.call(document.getElementsByTagName('h1'),0);
 
@@ -53,5 +53,5 @@ window.onload = function() {
             };
       });
       ipcRenderer.sendToHost('get_titles', list_title);
-      console.log(list_title);
+      //console.log(list_title);
 };
