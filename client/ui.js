@@ -50,6 +50,10 @@
 
 	var _Card2 = _interopRequireDefault(_Card);
 
+	var _Stash = __webpack_require__(13);
+
+	var _Stash2 = _interopRequireDefault(_Stash);
+
 	var _Navigator = __webpack_require__(2);
 
 	var _Navigator2 = _interopRequireDefault(_Navigator);
@@ -109,8 +113,7 @@
 	            // ];
 
 	            var elements = this.props.data.map(function (x) {
-	                console.log(x);
-	                return this.getElement(x.type, x.payload);
+	                return Card.getElement(x.type, x.payload);
 	            }.bind(this));
 
 	            return React.createElement(
@@ -132,24 +135,35 @@
 	        key: "stash",
 	        value: function stash(e) {
 	            e.target.remove();
+	            if (window.stashed_items == undefined) {
+	                window.stashed_items = [this.props.data];
+	            } else {
+	                window.stashed_items.push(this.props.data);
+	            }
 	        }
 	    }, {
-	        key: "guid",
-	        value: function guid() {
-	            function s4() {
-	                return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-	            }
-	            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+	        key: "onURLClicked",
+	        value: function onURLClicked(url) {
+	            this.props.onURLClicked(url);
+	        }
+	    }], [{
+	        key: "hashCode",
+	        value: function hashCode(str) {
+	            if (str == undefined) return;
+	            return str.split('').reduce(function (prevHash, currVal) {
+	                return (prevHash << 5) - prevHash + currVal.charCodeAt(0);
+	            }, 0);
 	        }
 	    }, {
 	        key: "getElement",
 	        value: function getElement(type, payload) {
 	            var _this2 = this;
 
+	            var key = Card.hashCode(JSON.stringify(payload));
 	            if (type == 0) {
 	                return React.createElement(
 	                    "h1",
-	                    { key: this.guid(), style: {
+	                    { key: key, style: {
 	                            margin: "0px",
 	                            textAlign: "center",
 	                            padding: "5px",
@@ -163,7 +177,7 @@
 	            } else if (type == 1) {
 	                return React.createElement(
 	                    "div",
-	                    { key: this.guid() },
+	                    { key: key },
 	                    React.createElement(
 	                        "h1",
 	                        { style: {
@@ -186,7 +200,7 @@
 	            } else if (type == 2 && payload["icon"] == true) {
 	                return React.createElement(
 	                    "div",
-	                    { key: this.guid(), style: {
+	                    { key: key, style: {
 	                            width: "100%", textAlign: "center",
 	                            paddingTop: "5px"
 	                        } },
@@ -197,7 +211,7 @@
 	            } else if (type == 2) {
 	                return React.createElement(
 	                    "div",
-	                    { key: this.guid(), style: {
+	                    { key: key, style: {
 	                            width: "100%", textAlign: "center",
 	                            marginBottom: "5px"
 	                        } },
@@ -208,7 +222,7 @@
 	            } else if (type == 3) {
 	                return React.createElement(
 	                    "div",
-	                    { key: this.guid(), style: {
+	                    { key: key, style: {
 	                            marginTop: "5px",
 	                            marginBottom: "5px",
 	                            marginLeft: "5px",
@@ -234,11 +248,6 @@
 	                    )
 	                );
 	            }
-	        }
-	    }, {
-	        key: "onURLClicked",
-	        value: function onURLClicked(url) {
-	            this.props.onURLClicked(url);
 	        }
 	    }]);
 
@@ -279,12 +288,12 @@
 	      var inputHolderStyle = {
 	        position: "absolute",
 	        left: "100px", top: "6px", bottom: "11px", right: "100px",
-	        borderRadius: "10px", border: "1px solid rgba(0,0,0,0.07)"
+	        borderRadius: "10px", border: "1px solid rgba(0,0,0,0.03)"
 	      };
 	      var inputStyle = {
 	        width: "100%",
 	        height: "100%",
-	        background: "",
+	        background: "rgba(0,0,0,0.03)",
 	        paddingRight: "10px"
 	      };
 	      console.log("rendering:" + this.props.url);
@@ -295,8 +304,23 @@
 	          "div",
 	          { style: inputHolderStyle },
 	          React.createElement("input", { style: inputStyle, defaultValue: this.props.url })
+	        ),
+	        React.createElement(
+	          "span",
+	          { style: {
+	              display: "inline-block",
+	              position: "absolute", fontSize: "15pt",
+	              top: "5px", right: "15px", width: "30px", height: "30px", textAlign: "center", cursor: "pointer",
+	              borderRadius: "5px", border: "1px solid rgba(0,0,0,0.05)"
+	            }, onClick: this.openStash.bind(this) },
+	          "\u2606"
 	        )
 	      );
+	    }
+	  }, {
+	    key: "openStash",
+	    value: function openStash() {
+	      this.props.openStash();
 	    }
 	  }]);
 
@@ -393,6 +417,58 @@
 	}(React.Component);
 
 	window.CardBar = CardBar;
+
+/***/ },
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Stash = function (_React$Component) {
+	  _inherits(Stash, _React$Component);
+
+	  function Stash(props) {
+	    _classCallCheck(this, Stash);
+
+	    return _possibleConstructorReturn(this, (Stash.__proto__ || Object.getPrototypeOf(Stash)).call(this, props));
+	  }
+
+	  _createClass(Stash, [{
+	    key: "render",
+	    value: function render() {
+	      var rootStyle = {};
+	      var items = window.stashed_items.map(function (item) {
+	        return React.createElement(window.Card, { data: item });
+	      });
+	      return React.createElement(
+	        "div",
+	        { style: rootStyle },
+	        items
+	      );
+	    }
+	  }]);
+
+	  return Stash;
+	}(React.Component);
+
+	window.Stash = Stash;
 
 /***/ }
 /******/ ]);
