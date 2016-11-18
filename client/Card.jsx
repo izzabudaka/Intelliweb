@@ -15,23 +15,31 @@ class Card extends React.Component {
       display:"inline-block"
     };
 
-    let cardData = [
-        {type:2,payload:{url:"https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",icon:true}},
-        {type:0,payload:{text:"Project X"}},
-        {type:1,payload:{title:"Stars",subtitle:"585"}},
-        {type:1,payload:{title:"Forks",subtitle:"111"}},
-        {type:1,payload:{title:"Description",subtitle:"This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas"}},
-        {type:3,payload:{text:"See repo", url:"http://github.com"}},
-        {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
-    ];
+    // let cardData = [
+    //     {type:2,payload:{url:"https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",icon:true}},
+    //     {type:0,payload:{text:"Project X"}},
+    //     {type:1,payload:{title:"Stars",subtitle:"585"}},
+    //     {type:1,payload:{title:"Forks",subtitle:"111"}},
+    //     {type:1,payload:{title:"Description",subtitle:"This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas"}},
+    //     {type:3,payload:{text:"See repo", url:"http://github.com"}},
+    //     {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
+    // ];
 
-    let elements = cardData.map(function(x) {
+    console.log(this.props.data);
+    let elements = this.props.data.map(function(x) {
+        console.log(x);    
         return this.getElement(x.type,x.payload);
     }.bind(this));
-   
+    
+
     return (
       <div style={rootStyle}>
             {elements}
+            <span style={{
+                display:"inline-block"
+            }}>
+                ☆
+            </span>
       </div>
     );
   }
@@ -108,7 +116,7 @@ class Card extends React.Component {
                 fontSize:"11pt",
                 background:"rgba(0,0,0,0.00)",fontWeight:"400",borderBottom:"1px solid rgba(0,0,0,0.025)"
             }}>
-                {payload["text"]}
+                {payload["name"]}
             </h1>
           </div>
       }
