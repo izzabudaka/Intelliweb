@@ -17,6 +17,11 @@ var _getUser = (username, callback) => {
     github.users.getForUser({
         username: username
     }, function(err, res) {
+        if (err) {
+            callback(null, []);
+            return;
+        }
+
         var card = Card();
         card.addTitle(res.name, '#fbfbfb');
         card.addSubtitle(res.login, 'Username', '#fbfbfb');
@@ -32,7 +37,10 @@ var _getRepo = (owner, repoName, callback) => {
         owner: owner,
         repo: repoName
     }, (err, res) => {
-        if (err) console.log(err);
+        if (err) {
+            callback(null, []);
+            return;
+        }
 
         var card = Card();
         card.addTitle(res.name, '#fbfbfb');
