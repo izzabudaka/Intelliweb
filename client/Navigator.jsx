@@ -15,7 +15,7 @@ class Navigator extends React.Component {
         width:"100%",
         height:"100%",
         background:"rgba(255,255,255,0.05)",
-        border:"0px solid rgba(255,255,255,0.08)",
+        border:"1px solid rgba(255,255,255,0.08)",
         paddingRight:"0px",borderRadius:"0px",paddingLeft:"5px",color:"white",
         fontSize:"11pt"
     };
@@ -26,7 +26,7 @@ class Navigator extends React.Component {
       <h1 style={{
         textAlign:"center",
         color:"white"  ,
-        fontFamily:"Helvetica",fontSize:"14pt",fontWeight:"100",
+        fontFamily:"Helvetica",fontSize:"11pt",fontWeight:"100",
         margin:0,
         paddingTop:"10px"
       }}>
@@ -76,9 +76,11 @@ class Navigator extends React.Component {
   }
 
   keyPressed(e){
-      this.props.shouldNavigateTo(e.target.value);
+      if (e.key === 'Enter') {
+        this.props.shouldNavigateTo(e.target.value);
+      }
   }
-  
+
   openStash(){
       this.props.openStash();
   }

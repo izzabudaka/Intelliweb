@@ -105,7 +105,8 @@
 	                overflowY: "scroll",
 	                display: "inline-block",
 	                position: "relative",
-	                boxShadow: "0px 0px 33px 0px rgba(0,0,0,0.19)"
+	                boxShadow: "0px 0px 33px 0px rgba(0,0,0,0.19)",
+	                overflowX: "hidden"
 	            };
 
 	            for (var attrname in this.props.style) {
@@ -120,18 +121,11 @@
 	            //     {type:1,payload:{title:"Description",subtitle:"This project is about skjdnakjbdalsbndjabsjdhbasdh dajabssdkbahsdhkasb dhjashjd ashb asjhb jas"}},
 	            //     {type:3,payload:{text:"See repo", url:"http://github.com"}},
 	            //     {type:2,payload:{url:"http://i2.mirror.co.uk/incoming/article8075004.ece/ALTERNATES/s615b/Harambe.jpg",icon:false}},
-	            // ];
+	            // ];xw
 
-	            var colourElement = this.props.data.filter(function (element) {
-	                return element.type == 5;
-	            });
-
-	            if (colourElement) {
-	                rootStyle.background = colourElement[0].payload.color;
-	            }
 
 	            var elements = this.props.data.map(function (x) {
-	                return Card.getElement(x.type, x.payload);
+	                return Card.getElement(x.type, x.payload, this.props);
 	            }.bind(this));
 
 	            return React.createElement(
@@ -162,11 +156,38 @@
 	            }
 	        }
 	    }, {
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
+	        key: "componentDidUpdate",
+	        value: function componentDidUpdate() {
+
+	            if (this.props == undefined) return;
 	            if (this.props.data.filter(function (x) {
 	                return x.type == 4;
-	            }).lenght > 0) {
+	            })[0] == undefined) return;
+	            if (document.getElementById("canvasx") == undefined) return;
+	            console.log(document.getElementById("canvasx"));
+	            var props = this.props;
+	            setTimeout(function () {
+	                var myChart = new Chart(document.getElementById("canvasx"), {
+	                    type: 'radar',
+	                    data: props.data.filter(function (x) {
+	                        return x.type == 4;
+	                    })[0].payload["data"]
+	                });
+	            }, 5000);
+	        }
+	    }, {
+	        key: "drawChart",
+	        value: function drawChart() {
+	            console.log(this.props.data.filter(function (x) {
+	                return x.type == 4;
+	            }));
+	            console.log(this.props.data.filter(function (x) {
+	                return x.type == 4;
+	            }).length > 0);
+	            if (this.props.data.filter(function (x) {
+	                return x.type == 4;
+	            }).length > 0) {
+	                console.log(this.chartCanvas);
 	                if (this.chartCanvas == undefined) return;
 	                var myRadarChart = new Chart(this.chartCanvas.getDOMNode(), {
 	                    type: 'radar',
@@ -191,10 +212,8 @@
 	        }
 	    }, {
 	        key: "getElement",
-	        value: function getElement(type, payload) {
-	            var _this3 = this;
-
-	            var key = Card.hashCode(JSON.stringify(payload));
+	        value: function getElement(type, payload, props) {
+	            var key = Math.random();
 	            if (type == 0) {
 	                return React.createElement(
 	                    "h1",
@@ -205,8 +224,8 @@
 	                            paddingTop: "8px",
 	                            paddingBottom: "8px",
 	                            fontSize: "11pt",
-	                            color: payload['colour'] || 'gray',
-	                            background: "rgba(0,0,0,0.00)", fontWeight: "400", borderBottom: "1px solid rgba(0,0,0,0.05)"
+	                            color: "#222" || 'gray',
+	                            background: "rgba(0,0,0,0.00)", fontWeight: "400", borderBottom: "1px solid rgba(0,0,0,0.05)", whiteSpace: "nowrap"
 	                        } },
 	                    payload["text"]
 	                );
@@ -218,9 +237,9 @@
 	                        "h1",
 	                        { style: {
 	                                margin: "8px",
-	                                color: payload['colour'] || 'gray',
-	                                fontSize: "12pt",
-	                                textDecoration: "underline"
+	                                marginTop: "14px",
+	                                color: "#222" || 'gray',
+	                                fontSize: "12pt"
 	                            } },
 	                        payload["title"]
 	                    ),
@@ -229,7 +248,7 @@
 	                        { style: {
 	                                margin: "8px",
 	                                fontSize: "11pt",
-	                                color: payload['colour'] || 'gray',
+	                                color: "#222" || 'gray',
 	                                wordWrap: "break-word",
 	                                maxHeight: '150px',
 	                                overflow: 'hidden',
@@ -273,7 +292,7 @@
 	                            cursor: "pointer",
 	                            backgroundColor: payload["background"] || "inherit"
 	                        }, onClick: function onClick() {
-	                            return _this3.onURLClicked(payload["url"]);
+	                            return props.onURLClicked(payload["url"]);
 	                        } },
 	                    React.createElement(
 	                        "h1",
@@ -284,7 +303,7 @@
 	                                paddingTop: "8px",
 	                                paddingBottom: "8px",
 	                                fontSize: "11pt",
-	                                color: payload['colour'] || 'inherit',
+	                                color: "#222" || 'inherit',
 	                                background: "rgba(0,0,0,0.00)", fontWeight: "400", borderBottom: "1px solid rgba(0,0,0,0.025)"
 	                            } },
 	                        payload["name"]
@@ -294,9 +313,7 @@
 	                return React.createElement(
 	                    "div",
 	                    null,
-	                    React.createElement("canvas", { ref: function ref(x) {
-	                            return _this3.chartCanvas = x;
-	                        }, width: "240", height: "240" })
+	                    React.createElement("canvas", { id: "canvasx", width: "400", height: "400" })
 	                );
 	            }
 	        }
@@ -340,6 +357,8 @@
 	  _createClass(CardStub, [{
 	    key: "render",
 	    value: function render() {
+	      var _this2 = this;
+
 	      var rootStyle = {
 	        width: "95%",
 	        borderRadius: "10px",
@@ -352,11 +371,26 @@
 	      var title = this.props.data.filter(function (x) {
 	        return x.type == 0;
 	      })[0].payload["text"];
-	      var card = React.createElement(window.Card, { onMouseOut: this.mouseLeave.bind(this), data: this.props.data, style: {
+	      var card = React.createElement(window.Card, { on: true, onMouseOut: this.mouseLeave.bind(this), data: this.props.data, onURLClicked: function onURLClicked(url) {
+	          return _this2.props.onURLClicked(url);
+	        }, style: {
 	          position: "fixed", visibility: this.state.hovering ? "visible" : "hidden",
 	          left: this.state.coords.left + "px", top: this.state.coords.top + "px",
 	          zIndex: 99999, width: this.state.coords.width
 	        } });
+
+	      var colourElement = this.props.data.filter(function (element) {
+	        return element.type == 5;
+	      });
+
+	      if (colourElement) {
+	        if (colourElement[0] != undefined) {
+	          rootStyle.background = colourElement[0].payload.color;
+	        } else {
+	          rootStyle.background = "black";
+	        }
+	      }
+
 	      return React.createElement(
 	        "div",
 	        { style: rootStyle, onMouseEnter: this.mouseEnter.bind(this) },
@@ -372,7 +406,7 @@
 	              background: "rgba(0,0,0,0.00)", fontWeight: "400",
 	              height: "50px",
 	              lineHeight: "50px",
-	              verticalAlign: "middle"
+	              verticalAlign: "middle", whiteSpace: "nowrap"
 	            } },
 	          title
 	        ),
@@ -386,10 +420,10 @@
 	  }, {
 	    key: "componentDidMount",
 	    value: function componentDidMount() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      setTimeout(function () {
-	        return _this2.setState({ loaded: true });
+	        return _this3.setState({ loaded: true });
 	      }, 1500);
 	    }
 	  }, {
@@ -397,8 +431,8 @@
 	    value: function mouseEnter(e) {
 	      if (this.state.hovering) return;
 	      this.setState({ hovering: true, coords: {
-	          left: e.target.getBoundingClientRect().left - 10,
-	          top: e.target.getBoundingClientRect().top - 10,
+	          left: e.target.getBoundingClientRect().left - 15,
+	          top: e.target.getBoundingClientRect().top - 15,
 	          width: e.target.getBoundingClientRect().width - 10
 	        } });
 	    }
@@ -477,6 +511,113 @@
 	    function Navigator(props) {
 	        _classCallCheck(this, Navigator);
 
+<<<<<<< HEAD
+	  _createClass(Navigator, [{
+	    key: "render",
+	    value: function render() {
+	      var rootStyle = {
+	        position: "relative", width: "100%", height: "100%", background: "#d33400", color: "white"
+	      };
+	      var inputHolderStyle = {
+	        position: "absolute",
+	        left: "100px", top: "6px", bottom: "11px", right: "100px",
+	        borderRadius: "10px", border: "0px solid rgba(0,0,0,0.03)"
+	      };
+	      var inputStyle = {
+	        width: "100%",
+	        height: "100%",
+	        background: "rgba(255,255,255,0.05)",
+	        border: "1px solid rgba(255,255,255,0.08)",
+	        paddingRight: "0px", borderRadius: "0px", paddingLeft: "5px", color: "white",
+	        fontSize: "11pt"
+	      };
+
+	      console.log("rendering:" + this.props.url);
+	      return React.createElement(
+	        "div",
+	        { style: rootStyle },
+	        React.createElement(
+	          "h1",
+	          { style: {
+	              textAlign: "center",
+	              color: "white",
+	              fontFamily: "Helvetica", fontSize: "11pt", fontWeight: "100",
+	              margin: 0,
+	              paddingTop: "10px"
+	            } },
+	          this.props.title
+	        ),
+	        React.createElement(
+	          "div",
+	          { style: { height: "40px", position: "absolute", left: 0, right: 0, bottom: 0 } },
+	          React.createElement(
+	            "div",
+	            { style: inputHolderStyle },
+	            React.createElement("input", { onKeyPress: this.keyPressed.bind(this), style: inputStyle, defaultValue: this.props.url })
+	          ),
+	          React.createElement(
+	            "span",
+	            { style: {
+	                display: "inline-block",
+	                position: "absolute", fontSize: "15pt",
+	                top: "2px", right: "15px", width: "30px", height: "30px", textAlign: "center", cursor: "pointer",
+	                borderRadius: "5px", border: "1px solid rgba(0,0,0,0.05)", lineHeight: "30px", verticalAlign: "middle"
+	              }, onClick: this.openStash.bind(this) },
+	            "\u2606"
+	          ),
+	          React.createElement(
+	            "span",
+	            { style: {
+	                display: "inline-block",
+	                position: "absolute", fontSize: "15pt",
+	                top: "2px", left: "15px", width: "30px", height: "30px", textAlign: "center", cursor: "pointer",
+	                borderRadius: "5px", border: "1px solid rgba(0,0,0,0.05)", lineHeight: "30px", verticalAlign: "middle"
+	              }, onClick: this.openStash.bind(this) },
+	            "\u25C4"
+	          ),
+	          React.createElement(
+	            "span",
+	            { style: {
+	                display: "inline-block",
+	                position: "absolute", fontSize: "15pt",
+	                top: "2px", left: "45px", width: "30px", height: "30px", textAlign: "center", cursor: "pointer",
+	                borderRadius: "5px", border: "1px solid rgba(0,0,0,0.05)", lineHeight: "30px", verticalAlign: "middle"
+	              }, onClick: this.openStash.bind(this) },
+	            "\u25BA"
+	          ),
+	          React.createElement(
+	            "span",
+	            { style: {
+	                display: "inline-block",
+	                position: "absolute", fontSize: "15pt",
+	                top: "2px", right: "100px", width: "30px", height: "30px", textAlign: "center", cursor: "pointer",
+	                borderRadius: "5px", border: "1px solid rgba(0,0,0,0.05)", lineHeight: "30px", verticalAlign: "middle"
+	              }, onClick: this.openStash.bind(this) },
+	            "\u21BA"
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: "keyPressed",
+	    value: function keyPressed(e) {
+	      if (e.key === 'Enter') {
+	        this.props.shouldNavigateTo(e.target.value);
+	      }
+	    }
+	  }, {
+	    key: "openStash",
+	    value: function openStash() {
+	      this.props.openStash();
+	    }
+	  }]);
+
+	  return Navigator;
+	}(React.Component);
+
+	window.Navigator = Navigator;
+
+=======
 	        return _possibleConstructorReturn(this, (Navigator.__proto__ || Object.getPrototypeOf(Navigator)).call(this, props));
 	    }
 
@@ -583,6 +724,7 @@
 
 	window.Navigator = Navigator;
 
+>>>>>>> 2a0f35d0ec25c22584ff065bf804a1145d1532c0
 /***/ },
 /* 5 */
 /***/ function(module, exports) {
@@ -599,11 +741,24 @@
 
 	var CardBar = function (_React$Component) {
 	  _inherits(CardBar, _React$Component);
+<<<<<<< HEAD
+
+	  function CardBar(props) {
+	    _classCallCheck(this, CardBar);
+
+	    var _this = _possibleConstructorReturn(this, (CardBar.__proto__ || Object.getPrototypeOf(CardBar)).call(this, props));
+
+	    _this.state = {
+	      filteredCards: props.cards
+	    };
+	    return _this;
+=======
 
 	  function CardBar(props) {
 	    _classCallCheck(this, CardBar);
 
 	    return _possibleConstructorReturn(this, (CardBar.__proto__ || Object.getPrototypeOf(CardBar)).call(this, props));
+>>>>>>> 2a0f35d0ec25c22584ff065bf804a1145d1532c0
 	  }
 
 	  _createClass(CardBar, [{
@@ -612,6 +767,55 @@
 	      var _this2 = this;
 
 	      var rootStyle = {
+<<<<<<< HEAD
+	        height: this.props.height + "px",
+	        overflowY: "scroll"
+	      };
+	      // for(var i = 0; i < this.props.height / 250;i++){
+	      //   heights.push(<div style={{width:"100%",overflow:"scroll"}}><div style={{height:"250px",width:"750px"}}>
+	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+	      //     <window.Card onURLClicked={(url)=>this.props.onURLClicked(url)}/>
+	      //   </div></div>)
+	      // }
+	      // let remainder = (this.props.height % 250);
+	      // if(remainder > 0) heights.push(<div style={{height:remainder+"px"}}/>);
+	      // this.props.loaded(this);
+	      var cards = this.state.filteredCards.map(function (data) {
+	        return React.createElement(window.CardStub, { data: data, onURLClicked: function onURLClicked(url) {
+	            return _this2.props.onURLClicked(url);
+	          } });
+	      });
+
+	      var inputStyle = {
+	        width: "100%",
+	        height: "100%",
+	        background: "rgba(0,0,0,0.05)",
+	        paddingRight: "0px", paddingLeft: "5px", color: "black",
+	        fontSize: "11pt", border: "none"
+	      };
+	      return React.createElement(
+	        "div",
+	        { style: { overflowY: "hidden", overflowX: "scroll", paddingBottom: "400px" } },
+	        React.createElement(
+	          "div",
+	          { style: rootStyle },
+	          React.createElement(
+	            "div",
+	            null,
+	            React.createElement(
+	              "div",
+	              { style: { height: "40px", width: "100%" } },
+	              React.createElement("input", { style: inputStyle, placeholder: "Search and filter", onKeyPress: this.startSearch.bind(this) })
+	            )
+	          ),
+	          cards,
+	          React.createElement(
+	            "div",
+	            null,
+	            React.createElement("i", { className: "fa fa-spinner", "aria-hidden": "true", style: { margin: "20px" } })
+	          )
+=======
 	        height: this.props.height + "px"
 	      };
 	      // for(var i = 0; i < this.props.height / 250;i++){
@@ -637,10 +841,33 @@
 	          "div",
 	          { style: rootStyle },
 	          cards
+>>>>>>> 2a0f35d0ec25c22584ff065bf804a1145d1532c0
 	        )
 	      );
 	    }
 	  }, {
+<<<<<<< HEAD
+	    key: "startSearch",
+	    value: function startSearch(e) {
+	      if (e.key === 'Enter') {
+	        console.log("searching");
+	        console.log(this.props.request);
+	        this.props.request({
+	          url: "http://127.0.0.1:3000/search",
+	          method: "POST",
+	          json: true,
+	          body: { cards: this.props.cards, query: e.target.value }
+	        }, function (err, response, body) {
+	          console.log(body);
+	          this.setState({
+	            filteredCards: body
+	          });
+	        });
+	      }
+	    }
+	  }, {
+=======
+>>>>>>> 2a0f35d0ec25c22584ff065bf804a1145d1532c0
 	    key: "updateScrollPosition",
 	    value: function updateScrollPosition(value) {
 	      if (ReactDOM.findDOMNode(this) != undefined) {

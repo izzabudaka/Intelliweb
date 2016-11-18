@@ -57,7 +57,7 @@ window.onload = function() {
 
       var list_table = Array.prototype.slice.call(document.getElementsByTagName('table'),0);
 
-      list_table = list_title.map(function(ref){
+      list_table = list_table.map(function(ref){
             return {
                   html: ref.innerHTML,
                   posX: ref.getBoundingClientRect().left,

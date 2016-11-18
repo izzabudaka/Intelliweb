@@ -33,7 +33,8 @@ app.post('/analyse_table', function(req, res) {
 });
 
 app.post('/search', function(req, res) {
-	var cards = req.body.cards;
+    console.log("searching");
+    var cards = req.body.cards;
 	var query = req.body.query;
 	searcher.search(query, cards, function(cards){
 		res.json({card : cards})
