@@ -67,8 +67,10 @@ this.get_entity_cards = function(entities, callback){
 
 		last_processed = processed
 		processed++
-		if(processed == size)
+		if(processed == size){
 			callback(result)
+			process.exit(1);
+		}
 	}
 	
 	if(entities["ORGANIZATION"] != undefined){
