@@ -21,7 +21,7 @@ function _getUser(url, callback) {
             card.addSubtitle(subTitle);
             card.addImage(image);
             card.addButton(url, 'View profile');
-
+            card.addColor("#1da1f2");
             callback(null, card.elements);
         }
         catch (e) {
@@ -47,7 +47,7 @@ function _getTweet(url, callback) {
         card.addSubtitle(subTitle);
         card.addImage(image);
         card.addButton(url, 'View tweet');
-
+        card.addColor("#1da1f2");
         callback(null, card.elements);
     });
 }

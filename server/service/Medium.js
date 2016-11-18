@@ -16,7 +16,7 @@ function _getPost(url, callback) {
             card.addTitle(title);
             card.addSubtitle(subtitle);
             card.addButton(url, 'View post');
-
+            card.addColor("#00ab6b");
             callback(null, card.elements);
         }
         catch (e) {
