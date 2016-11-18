@@ -80,5 +80,5 @@ this.get_entity_cards = function(entities, callback){
 
 	setTimeout(function(){
 		callback(result)
-	}, 10*1000);
+	}, 5*1000);
 }
