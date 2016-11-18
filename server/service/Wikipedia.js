@@ -55,17 +55,17 @@ this.get_entity_cards = function(entities, callback){
 	result = []
 	var promises = []
 	if(entities["ORGANIZATION"] != undefined)
-		entities["ORGANIZATION"]
+		new Set(entities["ORGANIZATION"])
 			.forEach(function(val){
 				promises.push(get_organization_card(val))
 			})
 	if(entities["PERSON"] != undefined)
-		entities["PERSON"]
+		new Set(entities["PERSON"])
 			.forEach(function(val){
 				promises.push(get_person_card(val))
 			})
 	if(entities["LOCATION"] != undefined)
-		entities["LOCATION"]
+		new Set(entities["LOCATION"])
 			.forEach(function(val){
 				promises.push(get_location_card(val))
 			})
