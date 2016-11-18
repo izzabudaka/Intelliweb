@@ -22,38 +22,25 @@ let scrollCode = "const {ipcRenderer} = require('electron');"+
 console.log(JSON.parse(JSON.stringify(webview)));
 var sideBar;
 var pageHeight;
+var allCards = [];
 webview.addEventListener('ipc-message', (event) => {
-
-        var buckets = {};
         if(event.channel === "get_links"){
             var requestLeft = event.args[0].length;
             event.args[0].forEach(function(linkBundle){
                     request("http://127.0.0.1:3000/analyse_links?link=" + linkBundle.link, function(error, response, body){
-                                    if(!error && response.statusCode==200){
-                                        requestLeft--;
-                                        let json = JSON.parse(response.body);
-                                        let card = json["card"];
-                                        if(card != undefined && card.filter((x)=>x == undefined).length == 0) {
-                                            
-                                            let bucket = Math.floor(linkBundle.posY / 250);
-                                            if(buckets[bucket] == undefined){
-                                                buckets[bucket] = [card];
-                                            }
-                                            else {
-                                                buckets[bucket].push(card);
-                                            }
-                                            if(requestLeft==0){
-                                                console.log("bucket-on");
-                                                console.log(buckets);
-                                                console.log("bucket-off");
-                                                let inner = React.createElement(window.CardBar, {
-                                                    height:pageHeight,
-                                                    loaded:function(v){sideBar = v},
-                                                    onURLClicked:(url)=>webview.src=url,
-                                                    buckets:buckets});
-                                                ReactDOM.render(inner,document.getElementById("rail"));
-                                            }
-                                        }    
+                            if(!error && response.statusCode==200){
+                                requestLeft--;
+                                let json = JSON.parse(response.body);
+                                let card = json["card"];
+                                if(card != undefined && card.filter((x)=>x == undefined).length == 0) {
+                                    allCards.push(card);
+                                    let inner = React.createElement(window.CardBar, {
+                                            height:pageHeight,
+                                            loaded:function(v){sideBar = v},
+                                            onURLClicked:(url)=>webview.src=url,
+                                            cards:allCards});
+                                    ReactDOM.render(inner,document.getElementById("rail"));
+                                }    
                     }
                     });
             });
@@ -63,7 +50,6 @@ webview.addEventListener('ipc-message', (event) => {
         //body -> {text:""}
         //card
         if(event.channel === "get_paragraphs"){
-            var requestLeft = event.args[0].length;
             event.args[0].forEach(function(linkBundle){
                 request({
                     url:"http://127.0.0.1:3000/analyse_txt",
@@ -72,36 +58,50 @@ webview.addEventListener('ipc-message', (event) => {
                     body:{text:linkBundle.paragraph}
                 }, function(err, response, body){
                     console.log("got paragraph data");
-                    requestLeft--;
                     let json = response.body;
                     console.log(response.body);
                     let cards = json["card"];
-                    cards.forEach(card=>{
+                    cards.forEach(card => {
                         card = card["card"];
                         if(card != undefined) {
-                            let bucket = Math.floor(linkBundle.posY / 250);
-                            if(buckets[bucket] == undefined){
-                                buckets[bucket] = [card];
-                            }
-                            else{
-                                buckets[bucket].push(card);
-                            }
-                            
-                            if(requestLeft==0){
+                            allCards.push(card);
                                 let inner = React.createElement(window.CardBar, {
                                     height:pageHeight,
                                     loaded:function(v){sideBar = v},
                                     onURLClicked:(url)=>webview.src=url,
-                                    buckets:buckets});
+                                    cards:allCards});
                                 ReactDOM.render(inner,document.getElementById("rail"));
-                            }
                         }
                         });
                     
                 });
-                     
+            });
+        }
+
+        if(event.channel === "get_tables"){
+            event.args[0].forEach(function(table){
+                request({
+                    url:"http://127.0.0.1:3000/analyze_table",
+                    method:"POST",
+                    json:true,
+                    body:{data:table.html}
+                }, function(err, response, body){
+                    let json = response.body;
+                    let cards = json["card"];
+                    cards.forEach(card => {
+                        card = card["card"];
+                        if(card != undefined) {
+                            allCards.push(card);
+                                let inner = React.createElement(window.CardBar, {
+                                    height:pageHeight,
+                                    loaded:function(v){sideBar = v},
+                                    onURLClicked:(url)=>webview.src=url,
+                                    cards:allCards});
+                                ReactDOM.render(inner,document.getElementById("rail"));
+                        }
+                        });
                     
-                
+                });
             });
         }
         // if(event.channel === "get_images"){
@@ -157,12 +157,22 @@ function openStash() {
 
 webview.addEventListener("will-navigate",function(url){
     console.log(url.url);
-    ReactDOM.render(React.createElement(window.Navigator,{url:url.url,openStash:
+    ReactDOM.render(React.createElement(window.Navigator,{title:webview.getTitle(),url:url.url,openStash:
 function openStash() {
-    console.log("open it");
+    ReactDOM.render(React.createElement(window.Stash,{}),document.getElementById("stash"));
+                    webview.style = "visibility:hidden;";
+                    $("#stash").css("visibility","visible");
 }}),document.getElementById("navigator"));
 });
 
+webview.addEventListener("dom-ready",function(){
+    ReactDOM.render(React.createElement(window.Navigator,{title:webview.getTitle(),url:webview.getURL(),openStash:
+    function openStash() {
+        ReactDOM.render(React.createElement(window.Stash,{}),document.getElementById("stash"));
+                    webview.style = "visibility:hidden;";
+                    $("#stash").css("visibility","visible");
+    }}),document.getElementById("navigator"));
+});
 
 });
 

@@ -27,7 +27,7 @@ function _getAnswer(url, callback) {
         card.addSubtitle('Answer');
         card.addSubtitle(answer);
         card.addButton(url, 'View question');
-        card.addColor("#9CCC65") // light green
+        card.addColor("#f75200"); // light green
         callback(null, card.elements);
     });
 }
