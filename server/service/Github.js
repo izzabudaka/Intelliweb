@@ -42,7 +42,7 @@ var _getRepo = (owner, repoName, callback) => {
         card.addSubtitle(res.watchers_count, 'Watchers');
         card.addSubtitle(res.forks, 'Forks');
         card.addButton(res.html_url, 'View Repo');
-        cardEle.addColor("#CFD8DC"); // some off-white here
+        card.addColor("#CFD8DC"); // some off-white here
         callback(null, card.elements);
     });
 };
