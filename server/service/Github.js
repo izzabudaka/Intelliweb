@@ -18,8 +18,8 @@ var _getUser = (username, callback) => {
         username: username
     }, function(err, res) {
         var card = Card();
-        card.addTitle(res.login);
-        card.addSubtitle(res.name);
+        card.addTitle(res.name);
+        card.addSubtitle(res.login);
         card.addImage(res.avatar_url);
         card.addButton(res.html_url, 'View Profile');
 
