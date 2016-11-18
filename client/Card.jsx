@@ -27,8 +27,7 @@ class Card extends React.Component {
     // ];
 
     let elements = this.props.data.map(function(x) {
-        console.log(x);    
-        return this.getElement(x.type,x.payload);
+        return Card.getElement(x.type,x.payload);
     }.bind(this));
     
 
@@ -48,20 +47,23 @@ class Card extends React.Component {
 
   stash(e){
       e.target.remove();
+      if(window.stashed_items == undefined) {
+          window.stashed_items = [this.props.data];
+      }else{
+          window.stashed_items.push(this.props.data);
+      }
   }
 
-   guid() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
+    static hashCode(str) {
+        if(str == undefined)return;
+    return str.split('').reduce((prevHash, currVal) =>
+        ((prevHash << 5) - prevHash) + currVal.charCodeAt(0), 0);
     }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-    }
-  getElement(type,payload){
+
+  static getElement(type,payload){
+      let key = Card.hashCode(JSON.stringify(payload));
       if(type == 0){
-          return <h1 key={this.guid()} style={{
+          return <h1 key={key} style={{
               margin:"0px",
               textAlign:"center",
             padding:"5px",
@@ -74,7 +76,7 @@ class Card extends React.Component {
           </h1>
       }
       else if(type == 1){
-          return <div key={this.guid()}>
+          return <div key={key}>
             <h1 style={{
                 margin:"8px",
                 fontSize:"9pt"   ,fontWeight:"400" 
@@ -93,7 +95,7 @@ class Card extends React.Component {
           </div>
       }
       else if(type == 2 && payload["icon"] == true){
-          return <div key={this.guid()} style={{
+          return <div key={key} style={{
               width:"100%",textAlign:"center",
               paddingTop:"5px"
           }}>
@@ -103,7 +105,7 @@ class Card extends React.Component {
           </div>
       }
       else if(type == 2){
-          return <div key={this.guid()} style={{
+          return <div key={key} style={{
               width:"100%",textAlign:"center",
               marginBottom:"5px"
           }}>
@@ -113,7 +115,7 @@ class Card extends React.Component {
           </div>
       }
       else if(type == 3){
-          return <div key={this.guid()} style={{
+          return <div key={key} style={{
             marginTop:"5px",
             marginBottom:"5px",
             marginLeft:"5px",

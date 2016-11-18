@@ -27,3 +27,10 @@ h1,h2{
 textarea:focus, input:focus{
     outline: none;
 }
+
+#stash{
+    position:fixed;
+    top:41px;left:0px;right:0px;bottom:0px;
+    background-color: #f0f0f0;
+    visibility:hidden;
+}
