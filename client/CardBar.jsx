@@ -23,7 +23,7 @@ class CardBar extends React.Component {
       if(this.props.buckets[i] != undefined){
         this.props.buckets[i].forEach((data) => cards.push(<window.Card data={data} onURLClicked={(url)=>this.props.onURLClicked(url)}/>));
       }
-      heights.push(<div style={{width:"100%",overflow:"scroll"}}><div style={{height:"250px",width:"750px"}}>
+      heights.push(<div style={{width:"100%",overflow:"scroll"}}><div style={{height:"250px",width:"1500px"}}>
          {cards}
        </div></div>);
     }

@@ -69,11 +69,10 @@ webview.addEventListener('ipc-message', (event) => {
                     json:true,
                     body:{text:linkBundle.paragraph}
                 }, function(err, response, body){
-                    console.log(typeof response.body)
                     let json = response.body;
-                    console.log(JSON.stringify(json));
                     let cards = json["card"];
                     cards.forEach(card=>{
+                        card = card["card"]
                         if(card != undefined) {
                             requestLeft--;
                             console.log(linkBundle.posY);
@@ -86,7 +85,9 @@ webview.addEventListener('ipc-message', (event) => {
                             }
                             
                             if(requestLeft==0){
+                                console.log("bucket-on");
                                 console.log(buckets);
+                                console.log("bucket-off");
                                 let inner = React.createElement(window.CardBar, {
                                     height:pageHeight,
                                     loaded:function(v){sideBar = v},
