@@ -18,12 +18,20 @@ let scrollCode = "const {ipcRenderer} = require('electron');"+
   "ipcRenderer.sendToHost('pong')" +
 "}";
 console.log(JSON.parse(JSON.stringify(webview)));
-    webview.addEventListener('ipc-message', (event) => {
+var sideBar;
+webview.addEventListener('ipc-message', (event) => {
+
         if(event.channel === "get_links"){
             console.log(event.args[0]);
         }
         if(event.channel === "page_height"){
-            ReactDOM.render(React.createElement(window.CardBar, {height:event.args[0]}),document.getElementById("rail"));
+            let inner = React.createElement(window.CardBar, {height:event.args[0],loaded:function(v){sideBar = v}});
+            ReactDOM.render(inner,document.getElementById("rail"));
+        }
+        if(event.channel === "scrolling"){
+            if(sideBar != undefined){
+                sideBar.updateScrollPosition(event.args[0]);
+            }
         }
     });
     // webview.openDevTools();
