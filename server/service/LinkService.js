@@ -1,6 +1,7 @@
 var github = require('./Github'),
     amazon = require('./Amazon'),
     medium = require('./Medium'),
+    default_link = require('./DefaultLink')
     stackOverflow = require('./StackOverflow'),
     twitter = require('./Twitter');
 
@@ -19,6 +20,7 @@ exports.runService = (url) => {
             return ser.func(url);
         }
     }
+    return default_link.get_default(url)
 };
 
 register(/github\.com\/([A-Za-z0-9-_]+)\/*(.*)/, (url) => {
