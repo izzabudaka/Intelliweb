@@ -1,11 +1,12 @@
 var node_ner = require('node-ner');
 var fs = require('fs');
+var crypto = require('crypto');
 var ner = new node_ner({
 	install_path:	'./stanford-ner/'
 });
 
-var write_text = function(text, callback){
-	fs.writeFile("./test", text, function(err) {
+var write_text = function(text, hash, callback){
+	fs.writeFile("./test_" + hash, text, function(err) {
 	    if(err) {
 	        return console.log(err);
 	    }
@@ -15,8 +16,9 @@ var write_text = function(text, callback){
 }
 
 this.get_entities = function(web_txt, callback){
-	write_text(web_txt, function(){
-		ner.fromFile('./test', function(entities) {
+	var hash = crypto.createHash('md5').update(web_txt).digest('hex');
+	write_text(web_txt, hash, function(){
+		ner.fromFile('./test_' + hash, function(entities) {
 			console.log(entities)
 			callback(entities)
 		})
