@@ -40,4 +40,16 @@ window.onload = function() {
       });
       ipcRenderer.sendToHost('get_images', list_image);
       console.log(list_image);
+
+      var list_title = Array.prototype.slice.call(document.getElementsByTagName('h1'),0);
+
+      list_title = list_title.map(function(ref){
+            return {
+                  title: ref.innerText,
+                  posX: ref.getBoundingClientRect().left,
+                  posY: ref.getBoundingClientRect().top
+            };
+      });
+      ipcRenderer.sendToHost('get_titles', list_title);
+      console.log(list_title);
 };
