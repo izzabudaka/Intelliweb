@@ -1,7 +1,8 @@
 var request = require('request'),
     dom = require('jsdom'),
     fibrous = require('fibrous'),
-    htmlToText = require('textversionjs');
+    htmlToText = require('textversionjs'),
+    Card = require('../model/Card').Card;
 
 exports.getProduct = (url) => _getProduct.sync(url);
 
@@ -19,12 +20,12 @@ function _getProduct(url, callback) {
             description = htmlToText(descriptionEle.innerHTML).replace(/\n---/g, ', ');
         }
 
-        callback(null, {
-            title: title,
-            price: price,
-            image: image,
-            description: description,
-            url: url
-        });
+        var card = Card();
+        card.addTitle(title);
+        card.addSubtitle(price);
+        card.addImage(image);
+        card.addButton(url, 'View product');
+
+        callback(null, card.elements);
     });
 }
